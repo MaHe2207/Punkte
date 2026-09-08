@@ -49,7 +49,7 @@
     nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:white;border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(6,1fr)}
     nav button{background:transparent;color:var(--muted);padding:7px 2px;border-radius:10px;font-size:11px;font-weight:650}
     nav button.active{background:#f3f4f6;color:var(--text)}
-    nav .ico{display:block;font-size:21px;line-height:24px}.week-head{display:flex;gap:8px;align-items:center;justify-content:space-between}.week-head button{padding:8px 10px}.daybox{border:1px solid var(--line);border-radius:12px;margin-top:8px;overflow:hidden}.dayhead{padding:12px;background:#fff;cursor:pointer}.daydetails{padding:0 12px 10px;border-top:1px solid var(--line);background:#fafafa}.date-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}.danger-link{background:transparent;color:var(--bad);padding:5px 7px}.weight-big{font-size:28px;font-weight:800}
+    nav .ico{display:block;font-size:21px;line-height:24px}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.toolbar .wide{grid-column:1/-1}.editor-card{border:2px solid #d1d5db}.pill{display:inline-block;padding:3px 7px;border-radius:999px;background:#f3f4f6;font-size:11px;color:var(--muted);margin-right:4px}.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.week-head{display:flex;gap:8px;align-items:center;justify-content:space-between}.week-head button{padding:8px 10px}.daybox{border:1px solid var(--line);border-radius:12px;margin-top:8px;overflow:hidden}.dayhead{padding:12px;background:#fff;cursor:pointer}.daydetails{padding:0 12px 10px;border-top:1px solid var(--line);background:#fafafa}.date-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}.danger-link{background:transparent;color:var(--bad);padding:5px 7px}.weight-big{font-size:28px;font-weight:800}
     video{width:100%;aspect-ratio:4/3;background:#111;border-radius:16px;object-fit:cover}
     .scanbox{position:relative}.scanline{position:absolute;left:12%;right:12%;top:49%;height:2px;background:#fff;box-shadow:0 0 8px #fff}
     .notice{padding:10px 12px;border-radius:12px;background:#fff7ed;color:#9a3412;font-size:13px}
@@ -116,7 +116,54 @@
     </div>
   </section>
 
-  <section id="scanView" class="view">
+  <section id="productsView" class="view">
+    <div class="card">
+      <div class="title">Unsere Lebensmittel-Datenbank</div>
+      <p class="muted">Alle bisher gescannten oder manuell gespeicherten Lebensmittel eures Haushalts.</p>
+      <div class="toolbar">
+        <input id="productSearch" class="wide" placeholder="Name, Marke oder Barcode suchen …" oninput="renderProductLibrary()">
+        <select id="productSourceFilter" onchange="renderProductLibrary()">
+          <option value="all">Alle Quellen</option>
+          <option value="open_food_facts">Open Food Facts</option>
+          <option value="manual">Manuell</option>
+          <option value="barcode">Barcode</option>
+          <option value="import">Import</option>
+        </select>
+        <select id="productQualityFilter" onchange="renderProductLibrary()">
+          <option value="all">Alle Datensätze</option>
+          <option value="complete">Mit Nährwerten</option>
+          <option value="incomplete">Unvollständig</option>
+        </select>
+        <select id="productSort" class="wide" onchange="renderProductLibrary()">
+          <option value="name_asc">Name A–Z</option>
+          <option value="name_desc">Name Z–A</option>
+          <option value="points_asc">Punkte aufsteigend</option>
+          <option value="points_desc">Punkte absteigend</option>
+          <option value="newest">Zuletzt hinzugefügt</option>
+        </select>
+      </div>
+      <div id="productLibrary" style="margin-top:10px"></div>
+    </div>
+
+    <div id="productEditCard" class="card editor-card" style="display:none">
+      <div class="row"><div class="grow"><div class="title">Lebensmittel bearbeiten</div><div class="muted" id="productEditHint"></div></div><button class="secondary smallbtn" onclick="cancelProductEdit()">Schließen</button></div>
+      <label>Name</label><input id="peName">
+      <div class="grid2">
+        <div><label>Marke</label><input id="peBrand"></div>
+        <div><label>Barcode</label><input id="peBarcode" inputmode="numeric"></div>
+      </div>
+      <div class="grid2">
+        <div><label>Fett g</label><input id="peFat" type="number" step=".1"></div>
+        <div><label>ges. Fett g</label><input id="peSat" type="number" step=".1"></div>
+        <div><label>KH g</label><input id="peCarbs" type="number" step=".1"></div>
+        <div><label>Zucker g</label><input id="peSugar" type="number" step=".1"></div>
+        <div><label>Ballaststoffe g</label><input id="peFiber" type="number" step=".1"></div>
+        <div><label>Eiweiß g</label><input id="peProtein" type="number" step=".1"></div>
+      </div>
+      <label>Inhaltsstoffe</label><textarea id="peIngredients" rows="4" style="width:100%;box-sizing:border-box"></textarea>
+      <button class="full" style="margin-top:12px" onclick="saveProductEdit()">Änderungen speichern</button>
+    </div>
+
     <div class="card">
       <div class="title">Barcode scannen</div>
       <p class="muted">Kamera-Scan benötigt HTTPS und Browser-Unterstützung. Alternativ Barcode eintippen.</p>
@@ -189,7 +236,7 @@
 
   <section id="recipesView" class="view">
     <div class="card">
-      <div class="title">Gericht zusammenstellen</div>
+      <div class="title" id="recipeEditorTitle">Gericht zusammenstellen</div>
       <label>Name des Gerichts</label><input id="recipeName" placeholder="z. B. Frühstücksbowl">
       <label>Zutat</label><select id="ingredientSelect"></select>
       <div class="row">
@@ -202,11 +249,33 @@
       <div class="muted" id="recipePerServing">0 Punkte pro Portion</div>
       <label>Datum zum Eintragen</label><input id="recipeEntryDate" type="date">
       <div class="grid2" style="margin-top:12px">
-        <button onclick="saveRecipe()">Gericht speichern</button>
+        <button id="saveRecipeBtn" onclick="saveRecipe()">Gericht speichern</button>
         <button class="secondary" onclick="addRecipeToDate()">Portion eintragen</button>
       </div>
+      <button id="cancelRecipeEditBtn" class="secondary full" style="display:none;margin-top:8px" onclick="cancelRecipeEdit()">Bearbeiten abbrechen</button>
     </div>
-    <div class="card"><div class="title">Gespeicherte Lebensmittel & Gerichte</div><div id="savedLibrary"></div></div>
+    <div class="card">
+      <div class="title">Gespeicherte Gerichte</div>
+      <p class="muted">Hier erscheinen ausschließlich eure selbst gespeicherten Gerichte.</p>
+      <div class="toolbar">
+        <input id="recipeSearch" class="wide" placeholder="Gericht suchen …" oninput="renderRecipeLibrary()">
+        <select id="recipePointsFilter" onchange="renderRecipeLibrary()">
+          <option value="all">Alle Punkte</option>
+          <option value="low">0–5 P / Portion</option>
+          <option value="mid">6–10 P / Portion</option>
+          <option value="high">Mehr als 10 P</option>
+        </select>
+        <select id="recipeSort" onchange="renderRecipeLibrary()">
+          <option value="name_asc">Name A–Z</option>
+          <option value="name_desc">Name Z–A</option>
+          <option value="points_asc">Punkte aufsteigend</option>
+          <option value="points_desc">Punkte absteigend</option>
+          <option value="servings_desc">Portionen absteigend</option>
+        </select>
+        <div class="wide"><label>Datum für „Eintragen“</label><input id="recipeListDate" type="date"></div>
+      </div>
+      <div id="recipeLibrary" style="margin-top:10px"></div>
+    </div>
   </section>
 
   <section id="weightView" class="view">
@@ -253,11 +322,11 @@
 
 <nav>
   <button data-view="todayView" class="active"><span class="ico">●</span>Heute</button>
-  <button data-view="scanView"><span class="ico">▣</span>Scan</button>
   <button data-view="weekView"><span class="ico">▥</span>Woche</button>
+  <button data-view="productsView"><span class="ico">▣</span>Lebensmittel</button>
   <button data-view="recipesView"><span class="ico">☰</span>Gerichte</button>
   <button data-view="weightView"><span class="ico">⚖</span>Gewicht</button>
-  <button data-view="settingsView"><span class="ico">⚙</span>Setup</button>
+  <button data-view="settingsView"><span class="ico">⚙</span>Einstellungen</button>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -274,7 +343,7 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
 });
 const STORE_KEY="punkteApp_cache_v2";
 const defaultState={target:210,entries:[],products:[],recipes:[],weights:[]};
-let state={...defaultState};let currentProduct=null,recipeDraft=[];let scannerStream=null,scanTimer=null;let weekCursor=mondayOf();
+let state={...defaultState};let currentProduct=null,recipeDraft=[],editingRecipeId=null,editingProductId=null;let scannerStream=null,scanTimer=null;let weekCursor=mondayOf();
 let currentUser=null,currentHousehold=null,authMode='login';
 const n=v=>{if(v===null||v===undefined||v==='')return 0;const x=typeof v==='string'?Number(v.replace(',','.')):Number(v);return Number.isFinite(x)?x:0}, round1=v=>Math.round(v*10)/10;
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
@@ -309,11 +378,11 @@ async function joinHousehold(){const code=joinCode.value.trim();if(!code)return;
 async function createInviteCode(){if(!currentHousehold)return;const {data,error}=await sb.rpc('create_household_invite',{requested_household_id:currentHousehold.id});inviteCodeBox.style.display='block';inviteCodeBox.textContent=error?'Einladung konnte nicht erstellt werden. Bitte zuerst supabase_upgrade.sql ausführen. '+error.message:`Einladungscode: ${data} · 7 Tage gültig · einmal verwendbar`;}
 async function loadCloudData(){const hid=currentHousehold.id;const [settings,products,daily,sport,recipes,items,weights]=await Promise.all([sb.from('user_settings').select('*').eq('user_id',currentUser.id).maybeSingle(),sb.from('products').select('*').eq('household_id',hid).order('product_name'),sb.from('daily_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false}),sb.from('sport_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false}),sb.from('recipes').select('*').eq('household_id',hid).order('name'),sb.from('recipe_items').select('*'),sb.from('weight_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false})]);
 state.target=n(settings.data?.weekly_target)||n(settings.data?.daily_target)*7||210;state.products=(products.data||[]).map(dbToProduct);const dailyEntries=(daily.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.product_name,detail:`${x.amount_grams} g`,points:n(x.points),type:'food',table:'daily_entries'}));const sportEntries=(sport.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.activity,detail:x.minutes?`${x.minutes} Min · Sport`:'Sport',points:-n(x.minus_points),type:'sport',table:'sport_entries'}));state.entries=[...dailyEntries,...sportEntries];state.weights=(weights.data||[]).map(w=>({id:w.id,date:w.entry_date,kg:n(w.weight_kg),notes:w.notes||''}));state.recipes=(recipes.data||[]).map(r=>{const ri=(items.data||[]).filter(i=>i.recipe_id===r.id).map(i=>({id:i.id,productId:i.product_id,grams:n(i.amount_grams),name:state.products.find(p=>p.id===i.product_id)?.name||'Zutat'}));return recipeFromParts(r,ri)});localStorage.setItem(STORE_KEY,JSON.stringify(state));renderAll()}
-function dbToProduct(p){return{id:p.id,barcode:p.barcode||'',name:p.product_name,brand:p.brand||'',image:p.image_url||'',ingredients:p.ingredients_text||'',calories:n(p.calories),fat:n(p.fat),sat:n(p.saturated_fat),carbs:n(p.carbohydrates),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source}}
-function productToDb(p){return{household_id:currentHousehold.id,barcode:p.barcode||null,product_name:p.name,brand:p.brand||null,image_url:p.image||null,ingredients_text:p.ingredients||null,calories:n(p.calories),fat:n(p.fat),saturated_fat:n(p.sat),carbohydrates:n(p.carbs),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source||'manual',created_by:currentUser.id}}
-function recipeFromParts(r,ingredients){let total=0;for(const i of ingredients){const p=state.products.find(x=>x.id===i.productId);if(p){const c=calculatePoints(scaleNutrients(p,i.grams));if(c.ok)total+=c.points}}const servings=Math.max(1,n(r.servings)||1);return{id:r.id,name:r.name,servings,ingredients,totalPoints:total,pointsPerServing:Math.round(total/servings)}}
-document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(btn.dataset.view).classList.add('active');pageTitle.textContent=btn.textContent.trim();if(btn.dataset.view!=='scanView')stopScanner();renderAll()});
-function renderAll(){renderToday();renderWeek();renderLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate()}
+function dbToProduct(p){return{id:p.id,barcode:p.barcode||'',name:p.product_name,brand:p.brand||'',image:p.image_url||'',ingredients:p.ingredients_text||'',calories:n(p.calories),fat:n(p.fat),sat:n(p.saturated_fat),carbs:n(p.carbohydrates),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source,createdAt:p.created_at||'',updatedAt:p.updated_at||''}}
+function productToDb(p){return{household_id:currentHousehold.id,barcode:p.barcode||null,product_name:p.name,brand:p.brand||null,image_url:p.image||null,ingredients_text:p.ingredients||null,calories:n(p.calories),fat:n(p.fat),saturated_fat:n(p.sat),carbohydrates:n(p.carbs),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source||'manual',created_by:currentUser.id,updated_at:new Date().toISOString()}}
+function recipeFromParts(r,ingredients){let total=0;for(const i of ingredients){const p=state.products.find(x=>x.id===i.productId);if(p){const c=calculatePoints(scaleNutrients(p,i.grams));if(c.ok)total+=c.points}}const servings=Math.max(1,n(r.servings)||1);return{id:r.id,name:r.name,servings,ingredients,totalPoints:total,pointsPerServing:Math.round(total/servings),createdAt:r.created_at||'',updatedAt:r.updated_at||''}}
+document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(btn.dataset.view).classList.add('active');pageTitle.textContent=btn.textContent.trim();if(btn.dataset.view!=='productsView')stopScanner();renderAll()});
+function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate()}
 function renderToday(){const ds=localDate(),today=pointsForDate(ds),mon=mondayOf(),weekActual=pointsForWeek(mon),budget=currentWeekBudget();todayActual.textContent=today;todayWeekActual.textContent=weekActual;todayRemaining.textContent=budget-weekActual;const list=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);todayList.innerHTML=list.length?list.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Heute ist noch nichts eingetragen.</p>'}
 function renderWeek(){const mon=weekCursor||mondayOf(),actual=pointsForWeek(mon),carry=carryForWeek(mon),budget=n(state.target)+carry,remaining=budget-actual;weekLabel.textContent=`${localDate(mon)===localDate(mondayOf())?'Diese Woche · ':''}${mon.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})} – ${addDays(mon,6).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}`;let rows=[];for(let i=0;i<7;i++){const d=addDays(mon,i),ds=localDate(d),p=pointsForDate(ds),entries=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);const details=entries.length?entries.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Keine Einträge an diesem Tag.</p>';rows.push(`<details class="daybox"><summary class="dayhead"><div class="row"><div class="grow"><b>${['Mo','Di','Mi','Do','Fr','Sa','So'][i]} · ${d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}</b></div><div><b>${p}</b> P</div></div></summary><div class="daydetails">${details}</div></details>`)}weekTarget.textContent=budget;weekActual.textContent=actual;weekRemaining.textContent=remaining;carryIn.textContent=carry;carryOut.textContent=Math.min(4,Math.max(0,remaining));weekDays.innerHTML=rows.join('')}
 function changeWeek(delta){weekCursor=addDays(weekCursor||mondayOf(),delta*7);renderWeek()}
@@ -337,15 +406,43 @@ async function saveCurrentProduct(silent=false){if(!currentProduct)return null;c
 async function addCurrentProductToDate(){if(!currentProduct)return;const selectedDate=addDate.value||localDate();scanStatus.textContent='Wird eingetragen …';const saved=await saveCurrentProduct(true);if(!saved){const msg='Produkt konnte nicht gespeichert werden. Bitte Nährwerte prüfen.';scanStatus.textContent=msg;showToast(msg,'error');return}const g=Math.max(1,n(addGrams.value)),calc=calculatePoints(scaleNutrients(saved,g));if(!calc.ok){scanStatus.textContent=calc.error;showToast(calc.error,'error');return}const {data,error}=await sb.from('daily_entries').insert({user_id:currentUser.id,product_id:saved.id,entry_date:selectedDate,product_name:saved.name,amount_grams:g,points:calc.points}).select().single();if(error){const msg='Eintrag konnte nicht hinzugefügt werden: '+error.message;scanStatus.textContent=msg;showToast(msg,'error');return}state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name:saved.name,detail:`${g} g`,points:calc.points,type:'food',table:'daily_entries'});renderAll();const msg=`✓ ${saved.name} · ${g} g · ${calc.points} P für ${new Date(selectedDate+'T12:00:00').toLocaleDateString('de-DE')} eingetragen`;scanStatus.textContent=msg;showToast(msg);if(navigator.vibrate)navigator.vibrate(45)}
 async function startScanner(){scanStatus.textContent='';if(!navigator.mediaDevices?.getUserMedia){scanStatus.textContent='Kamera-Zugriff wird von diesem Browser nicht unterstützt.';return}if(!('BarcodeDetector' in window)){scanStatus.textContent='BarcodeDetector wird hier nicht unterstützt. Bitte Barcode eintippen.';return}try{const formats=await BarcodeDetector.getSupportedFormats(),wanted=['ean_13','ean_8','upc_a','upc_e','code_128'].filter(x=>formats.includes(x)),detector=new BarcodeDetector({formats:wanted.length?wanted:formats});scannerStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});const track=scannerStream.getVideoTracks()[0];try{const caps=track.getCapabilities?.()||{};if(Array.isArray(caps.focusMode)&&caps.focusMode.includes('continuous'))await track.applyConstraints({advanced:[{focusMode:'continuous'}]});}catch{}video.srcObject=scannerStream;await video.play();scanStatus.textContent='Kamera aktiv – Autofokus wird verwendet, sofern dein Gerät ihn unterstützt.';scanTimer=setInterval(async()=>{try{const codes=await detector.detect(video);if(codes.length){const raw=codes[0].rawValue;stopScanner();lookupBarcode(raw)}}catch{}},350)}catch(e){scanStatus.textContent='Kamera konnte nicht gestartet werden. Prüfe Berechtigung, HTTPS und Browser.'}}
 function stopScanner(){if(scanTimer){clearInterval(scanTimer);scanTimer=null}if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null}if(video)video.srcObject=null}
-function libraryItems(){return[...state.products.map(p=>({...p,kind:'product'})),...state.recipes.map(r=>({...r,kind:'recipe'}))]}
-function renderLibrary(){const items=libraryItems(),ps=items.filter(x=>x.kind==='product');ingredientSelect.innerHTML=ps.length?ps.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join(''):'<option value="">Erst ein Lebensmittel speichern</option>';savedLibrary.innerHTML=items.length?items.map(x=>x.kind==='product'?`<div class="item row"><div class="grow"><div class="item-name">${esc(x.name)}</div><div class="muted">${calculatePoints(x).ok?calculatePoints(x).points+' P / 100 g':'nicht berechenbar'}</div></div><button class="danger smallbtn" onclick="deleteProduct('${x.id}')">Löschen</button></div>`:`<div class="item row"><div class="grow"><div class="item-name">${esc(x.name)}</div><div class="muted">${x.pointsPerServing} P / Portion · ${x.servings} Portion(en)</div></div><button class="smallbtn" onclick="addSavedRecipeToDate('${x.id}')">+ Tag</button></div>`).join(''):'<p class="muted">Noch nichts gespeichert.</p>'}
+function renderProductLibrary(){
+  const selectProducts=[...state.products].sort((a,b)=>a.name.localeCompare(b.name,'de'));
+  ingredientSelect.innerHTML=selectProducts.length?selectProducts.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join(''):'<option value="">Erst ein Lebensmittel speichern</option>';
+  if(!window.productLibrary)return;
+  const q=(productSearch?.value||'').trim().toLowerCase(),source=productSourceFilter?.value||'all',quality=productQualityFilter?.value||'all',sort=productSort?.value||'name_asc';
+  let items=state.products.filter(p=>{
+    const hay=`${p.name} ${p.brand||''} ${p.barcode||''}`.toLowerCase();
+    const sourceOk=source==='all'||p.source===source;
+    const complete=hasUsefulNutrition(p);
+    const qualityOk=quality==='all'||(quality==='complete'?complete:!complete);
+    return (!q||hay.includes(q))&&sourceOk&&qualityOk;
+  });
+  const pts=p=>{const c=calculatePoints(p);return c.ok?c.points:9999};
+  items.sort((a,b)=>sort==='name_desc'?b.name.localeCompare(a.name,'de'):sort==='points_asc'?pts(a)-pts(b):sort==='points_desc'?pts(b)-pts(a):sort==='newest'?String(b.createdAt||'').localeCompare(String(a.createdAt||'')):a.name.localeCompare(b.name,'de'));
+  productLibrary.innerHTML=items.length?items.map(p=>{const c=calculatePoints(p),complete=hasUsefulNutrition(p);return `<div class="item"><div class="row"><div class="grow"><div class="item-name">${esc(p.name)}</div><div class="muted">${esc(p.brand||'Ohne Marke')}${p.barcode?` · ${esc(p.barcode)}`:''}</div><div style="margin-top:4px"><span class="pill">${c.ok?c.points+' P / 100 g':'nicht berechenbar'}</span><span class="pill">${esc(p.source||'manual')}</span>${complete?'':'<span class="pill">unvollständig</span>'}</div></div><div class="actions"><button class="smallbtn" onclick="useProduct('${p.id}')">Eintragen</button><button class="secondary smallbtn" onclick="editProduct('${p.id}')">Bearbeiten</button><button class="danger smallbtn" onclick="deleteProduct('${p.id}')">Löschen</button></div></div></div>`}).join(''):'<p class="muted">Keine Lebensmittel entsprechen der Auswahl.</p>';
+}
+function useProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;currentProduct={...p};showProduct(currentProduct);productCard.scrollIntoView({behavior:'smooth',block:'start'});showToast(`${p.name} zum Eintragen geöffnet ✓`)}
+function editProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;editingProductId=id;peName.value=p.name||'';peBrand.value=p.brand||'';peBarcode.value=p.barcode||'';peFat.value=p.fat;peSat.value=p.sat;peCarbs.value=p.carbs;peSugar.value=p.sugar;peFiber.value=p.fiber;peProtein.value=p.protein;peIngredients.value=p.ingredients||'';productEditHint.textContent=p.barcode?`Barcode ${p.barcode}`:'Ohne Barcode';productEditCard.style.display='block';productEditCard.scrollIntoView({behavior:'smooth',block:'start'})}
+function cancelProductEdit(){editingProductId=null;productEditCard.style.display='none'}
+async function saveProductEdit(){const old=state.products.find(x=>x.id===editingProductId);if(!old)return;const edited={...old,name:peName.value.trim()||old.name,brand:peBrand.value.trim(),barcode:peBarcode.value.trim(),fat:n(peFat.value),sat:n(peSat.value),carbs:n(peCarbs.value),sugar:n(peSugar.value),fiber:n(peFiber.value),protein:n(peProtein.value),ingredients:peIngredients.value.trim()};const calc=calculatePoints(edited);if(!calc.ok){showToast(calc.error,'error');return}const {data,error}=await sb.from('products').update(productToDb(edited)).eq('id',editingProductId).select().single();if(error){showToast('Produkt konnte nicht gespeichert werden: '+error.message,'error');return}const saved=dbToProduct(data),i=state.products.findIndex(x=>x.id===saved.id);if(i>=0)state.products[i]=saved;if(currentProduct?.id===saved.id){currentProduct=saved;showProduct(saved)}cancelProductEdit();renderAll();showToast(`${saved.name} aktualisiert ✓`)}
+function renderRecipeLibrary(){
+  if(!window.recipeLibrary)return;
+  const q=(recipeSearch?.value||'').trim().toLowerCase(),filter=recipePointsFilter?.value||'all',sort=recipeSort?.value||'name_asc';
+  let items=state.recipes.filter(r=>{const p=n(r.pointsPerServing);const f=filter==='all'||(filter==='low'&&p<=5)||(filter==='mid'&&p>=6&&p<=10)||(filter==='high'&&p>10);return (!q||r.name.toLowerCase().includes(q))&&f});
+  items.sort((a,b)=>sort==='name_desc'?b.name.localeCompare(a.name,'de'):sort==='points_asc'?a.pointsPerServing-b.pointsPerServing:sort==='points_desc'?b.pointsPerServing-a.pointsPerServing:sort==='servings_desc'?b.servings-a.servings:a.name.localeCompare(b.name,'de'));
+  recipeLibrary.innerHTML=items.length?items.map(r=>`<div class="item"><div class="row"><div class="grow"><div class="item-name">${esc(r.name)}</div><div class="muted">${r.pointsPerServing} P / Portion · ${r.servings} Portion(en) · ${r.ingredients.length} Zutat(en)</div></div><div class="actions"><button class="smallbtn" onclick="addSavedRecipeToDate('${r.id}',recipeListDate.value||localDate())">Eintragen</button><button class="secondary smallbtn" onclick="editRecipe('${r.id}')">Bearbeiten</button><button class="danger smallbtn" onclick="deleteRecipe('${r.id}')">Löschen</button></div></div></div>`).join(''):'<p class="muted">Keine Gerichte entsprechen der Auswahl.</p>';
+}
 function addIngredient(){const p=state.products.find(x=>x.id===ingredientSelect.value);if(!p)return;recipeDraft.push({id:crypto.randomUUID(),productId:p.id,name:p.name,grams:Math.max(1,n(ingredientGrams.value))});renderRecipeBuilder()}
 function renderRecipeBuilder(){let total=0;recipeIngredients.innerHTML=recipeDraft.length?recipeDraft.map(i=>{const p=state.products.find(x=>x.id===i.productId),c=p?calculatePoints(scaleNutrients(p,i.grams)):{ok:false},pts=c.ok?c.points:0;total+=pts;return `<div class="item row"><div class="grow"><b>${esc(i.name)}</b><div class="muted">${i.grams} g · ${pts} P</div></div><button class="danger smallbtn" onclick="removeIngredient('${i.id}')">×</button></div>`}).join(''):'<p class="muted">Noch keine Zutaten.</p>';const servings=Math.max(1,Math.round(n(recipeServings.value)||1));recipePoints.textContent=total;recipePerServing.textContent=`${Math.round(total/servings)} Punkte pro Portion`}
 function removeIngredient(id){recipeDraft=recipeDraft.filter(x=>x.id!==id);renderRecipeBuilder()}
 function currentRecipeData(){let total=0;for(const i of recipeDraft){const p=state.products.find(x=>x.id===i.productId);if(p){const c=calculatePoints(scaleNutrients(p,i.grams));if(c.ok)total+=c.points}}const servings=Math.max(1,Math.round(n(recipeServings.value)||1));return{name:recipeName.value.trim()||'Mein Gericht',ingredients:[...recipeDraft],servings,totalPoints:total,pointsPerServing:Math.round(total/servings)}}
-async function saveRecipe(){if(!recipeDraft.length)return alert('Bitte mindestens eine Zutat hinzufügen.');const r=currentRecipeData(),{data,error}=await sb.from('recipes').insert({household_id:currentHousehold.id,name:r.name,servings:r.servings,created_by:currentUser.id}).select().single();if(error)return alert(error.message);const rows=r.ingredients.map(i=>({recipe_id:data.id,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error)return alert(ins.error.message);state.recipes.push({...r,id:data.id});recipeDraft=[];renderAll();showToast(`${r.name} gespeichert ✓`)}
+async function saveRecipe(){if(!recipeDraft.length){showToast('Bitte mindestens eine Zutat hinzufügen.','error');return}const r=currentRecipeData();if(editingRecipeId){const upd=await sb.from('recipes').update({name:r.name,servings:r.servings,updated_at:new Date().toISOString()}).eq('id',editingRecipeId).select().single();if(upd.error){showToast('Gericht konnte nicht aktualisiert werden: '+upd.error.message,'error');return}const del=await sb.from('recipe_items').delete().eq('recipe_id',editingRecipeId);if(del.error){showToast('Alte Zutaten konnten nicht ersetzt werden: '+del.error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:editingRecipeId,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}const name=r.name;cancelRecipeEdit(false);await loadCloudData();showToast(`${name} aktualisiert ✓`);return}const {data,error}=await sb.from('recipes').insert({household_id:currentHousehold.id,name:r.name,servings:r.servings,created_by:currentUser.id}).select().single();if(error){showToast('Gericht konnte nicht gespeichert werden: '+error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:data.id,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}recipeDraft=[];recipeName.value='';recipeServings.value=1;await loadCloudData();showToast(`${r.name} gespeichert ✓`)}
+function editRecipe(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;editingRecipeId=id;recipeName.value=r.name;recipeServings.value=r.servings;recipeDraft=r.ingredients.map(i=>({id:crypto.randomUUID(),productId:i.productId,name:state.products.find(p=>p.id===i.productId)?.name||i.name||'Zutat',grams:i.grams}));recipeEditorTitle.textContent='Gericht bearbeiten';saveRecipeBtn.textContent='Änderungen speichern';cancelRecipeEditBtn.style.display='block';renderRecipeBuilder();document.getElementById('recipesView').scrollIntoView({behavior:'smooth',block:'start'})}
+function cancelRecipeEdit(render=true){editingRecipeId=null;recipeDraft=[];recipeName.value='';recipeServings.value=1;recipeEditorTitle.textContent='Gericht zusammenstellen';saveRecipeBtn.textContent='Gericht speichern';cancelRecipeEditBtn.style.display='none';if(render)renderAll()}
+async function deleteRecipe(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;if(!confirm(`„${r.name}“ wirklich löschen?`))return;const {error}=await sb.from('recipes').delete().eq('id',id);if(error){showToast('Gericht konnte nicht gelöscht werden: '+error.message,'error');return}if(editingRecipeId===id)cancelRecipeEdit(false);state.recipes=state.recipes.filter(x=>x.id!==id);renderAll();showToast(`${r.name} gelöscht ✓`)}
 async function addRecipeToDate(){if(!recipeDraft.length)return alert('Bitte mindestens eine Zutat hinzufügen.');const r=currentRecipeData();await insertRecipeEntry(r.name,r.pointsPerServing,recipeEntryDate.value||localDate())}
-async function addSavedRecipeToDate(id){const r=state.recipes.find(x=>x.id===id);if(r)await insertRecipeEntry(r.name,r.pointsPerServing,recipeEntryDate.value||localDate())}
+async function addSavedRecipeToDate(id,dateOverride){const r=state.recipes.find(x=>x.id===id);if(r)await insertRecipeEntry(r.name,r.pointsPerServing,dateOverride||recipeEntryDate.value||localDate())}
 async function insertRecipeEntry(name,points,date=localDate()){const {data,error}=await sb.from('daily_entries').insert({user_id:currentUser.id,entry_date:date,product_name:name,amount_grams:1,points}).select().single();if(error)return alert(error.message);state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name,detail:'1 Portion',points,type:'recipe',table:'daily_entries'});renderAll();showToast(`✓ ${name} · 1 Portion · ${points} P eingetragen`);if(navigator.vibrate)navigator.vibrate(45)}
 async function addSport(){
   const activity=sportName.value.trim()||'Sport',minus=Math.max(0,n(sportPoints.value));
