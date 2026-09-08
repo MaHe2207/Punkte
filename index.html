@@ -68,7 +68,7 @@
 <div id="authShell" class="auth-shell hidden">
   <div class="card">
     <div class="title">Meine Punkte</div>
-    <p class="muted">Melde dich an, damit deine Daten sicher in Supabase gespeichert und zwischen Geräten synchronisiert werden.</p>
+    <p class="muted">Melde dich einmal an. Danach bleibst du auf diesem Gerät automatisch angemeldet, bis du dich selbst abmeldest.</p>
     <div class="auth-tabs"><button id="loginTab" onclick="setAuthMode('login')">Anmelden</button><button id="signupTab" class="secondary" onclick="setAuthMode('signup')">Registrieren</button></div>
     <label>E-Mail</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com">
     <label>Passwort</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mindestens 6 Zeichen">
@@ -220,7 +220,14 @@
 <script>
 const SUPABASE_URL="https://gdckdnoyhyoxnmknsfyp.supabase.co";
 const SUPABASE_KEY="sb_publishable_Rr8stnKGpZ4vrrkYI5pHqA_80kvlQcW";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
+  auth:{
+    persistSession:true,
+    autoRefreshToken:true,
+    detectSessionInUrl:true,
+    storage:window.localStorage
+  }
+});
 const STORE_KEY="punkteApp_cache_v2";
 const defaultState={target:30,entries:[],products:[],recipes:[]};
 let state={...defaultState};let currentProduct=null,recipeDraft=[];let scannerStream=null,scanTimer=null;
@@ -237,7 +244,7 @@ function addDays(d,x){const a=new Date(d);a.setDate(a.getDate()+x);return a}
 function pointsForDate(ds){return state.entries.filter(e=>e.date===ds).reduce((a,e)=>a+n(e.points),0)}
 function setAuthMode(mode){authMode=mode;loginTab.className=mode==='login'?'':'secondary';signupTab.className=mode==='signup'?'':'secondary';authSubmit.textContent=mode==='login'?'Anmelden':'Registrieren';authPassword.autocomplete=mode==='login'?'current-password':'new-password';authStatus.textContent=''}
 async function submitAuth(){const email=authEmail.value.trim(),password=authPassword.value;if(!email||password.length<6){authStatus.textContent='Bitte E-Mail und Passwort mit mindestens 6 Zeichen eingeben.';return}authSubmit.disabled=true;authStatus.textContent='Bitte warten …';let result=authMode==='login'?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password});authSubmit.disabled=false;if(result.error){authStatus.textContent=result.error.message;return}if(authMode==='signup'&&!result.data.session){authStatus.textContent='Registrierung erfolgreich. Bitte bestätige ggf. die E-Mail und melde dich danach an.';return}authStatus.textContent='Erfolgreich.'}
-async function logout(){await sb.auth.signOut()}
+async function logout(){await sb.auth.signOut({scope:'local'})}
 async function bootstrap(session){currentUser=session?.user||null;if(!currentUser){authShell.classList.remove('hidden');householdShell.classList.add('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');return}authShell.classList.add('hidden');await loadHousehold();}
 async function loadHousehold(){const {data,error}=await sb.from('household_members').select('household_id,role,households(id,name,owner_id)').eq('user_id',currentUser.id).limit(1);if(error){householdStatus.textContent=error.message;return}if(!data?.length){currentHousehold=null;householdShell.classList.remove('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');return}currentHousehold=data[0].households||{id:data[0].household_id,name:'Unser Haushalt'};householdShell.classList.add('hidden');appMain.classList.remove('hidden');document.querySelector('nav').classList.remove('hidden');await loadCloudData();}
 async function createHousehold(){householdStatus.textContent='Wird erstellt …';const name=newHouseholdName.value.trim()||'Unser Haushalt';const {data:h,error:e}=await sb.from('households').insert({name,owner_id:currentUser.id}).select().single();if(e){householdStatus.textContent=e.message;return}const {error:m}=await sb.from('household_members').insert({household_id:h.id,user_id:currentUser.id,role:'owner'});if(m){householdStatus.textContent=m.message;return}await loadHousehold()}
