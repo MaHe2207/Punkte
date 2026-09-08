@@ -1,9 +1,9 @@
 {
   "name": "Meine Punkte",
   "short_name": "Punkte",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f3f4f6",
   "theme_color": "#111827",
-  "description": "Mobiler Lebensmittel-, Punkte-, Sport- und Gerichte-Rechner."
+  "lang": "de"
 }
