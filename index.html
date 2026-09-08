@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Meine Punkte</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root{
+      --bg:#f3f4f6;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;
+      --accent:#111827;--good:#15803d;--bad:#b91c1c;--soft:#eef2ff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:88px}
+    button,input,textarea,select{font:inherit}
+    header{position:sticky;top:0;z-index:10;background:rgba(243,244,246,.94);backdrop-filter:blur(12px);padding:calc(14px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line)}
+    header h1{font-size:21px;margin:0;max-width:720px;margin-inline:auto}
+    main{max-width:720px;margin:0 auto;padding:14px}
+    .view{display:none}.view.active{display:block}
+    .card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+    .hero{background:var(--accent);color:white}
+    .hero .muted{color:#d1d5db}
+    .row{display:flex;gap:10px;align-items:center}.row>*{min-width:0}.grow{flex:1}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .metric{padding:12px;border-radius:14px;background:#f9fafb}
+    .metric b{display:block;font-size:24px;margin-top:2px}
+    .hero .metric{background:rgba(255,255,255,.12)}
+    .muted{color:var(--muted);font-size:13px}
+    .title{font-weight:750;font-size:17px}
+    label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}
+    input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:white;color:var(--text);outline:none}
+    textarea{min-height:82px;resize:vertical}
+    input:focus,textarea:focus,select:focus{border-color:#9ca3af;box-shadow:0 0 0 3px rgba(17,24,39,.08)}
+    button{border:0;border-radius:13px;padding:12px 14px;background:var(--accent);color:white;font-weight:700}
+    button.secondary{background:#e5e7eb;color:#111827}
+    button.danger{background:#fee2e2;color:#991b1b}
+    button.good{background:#dcfce7;color:#166534}
+    button:disabled{opacity:.5}
+    .full{width:100%}
+    .chip{display:inline-block;padding:5px 9px;border-radius:999px;background:#f3f4f6;font-size:12px;margin:2px}
+    .points{font-size:28px;font-weight:850}
+    .item{padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}
+    .item-name{font-weight:700}.right{text-align:right}
+    .positive{color:var(--bad)}.negative{color:var(--good)}
+    nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:white;border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr)}
+    nav button{background:transparent;color:var(--muted);padding:7px 2px;border-radius:10px;font-size:11px;font-weight:650}
+    nav button.active{background:#f3f4f6;color:var(--text)}
+    nav .ico{display:block;font-size:21px;line-height:24px}
+    video{width:100%;aspect-ratio:4/3;background:#111;border-radius:16px;object-fit:cover}
+    .scanbox{position:relative}.scanline{position:absolute;left:12%;right:12%;top:49%;height:2px;background:#fff;box-shadow:0 0 8px #fff}
+    .notice{padding:10px 12px;border-radius:12px;background:#fff7ed;color:#9a3412;font-size:13px}
+    .ok{background:#ecfdf5;color:#166534}
+    .weekbar{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden}.weekbar>div{height:100%;background:#111827;border-radius:99px}
+    details{margin-top:8px}summary{cursor:pointer;font-weight:650}
+    .smallbtn{padding:8px 10px;font-size:12px}
+    @media (max-width:390px){.grid3{grid-template-columns:1fr 1fr}.card{border-radius:15px;padding:14px}}
+  </style>
+</head>
+<body>
+<header><h1 id="pageTitle">Heute</h1></header>
+<main>
+  <section id="todayView" class="view active">
+    <div class="card hero">
+      <div class="muted">Heute</div>
+      <div class="grid3" style="margin-top:8px">
+        <div class="metric"><span class="muted">Soll</span><b id="todayTarget">30</b></div>
+        <div class="metric"><span class="muted">Ist</span><b id="todayActual">0</b></div>
+        <div class="metric"><span class="muted">Übrig</span><b id="todayRemaining">30</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row"><div class="grow"><div class="title">Heute eingetragen</div><div class="muted">Lebensmittel und Sport</div></div></div>
+      <div id="todayList"></div>
+    </div>
+    <div class="card">
+      <div class="title">Sport hinzufügen</div>
+      <div class="grid2">
+        <div><label>Aktivität</label><input id="sportName" placeholder="z. B. Laufen"></div>
+        <div><label>Minuspunkte</label><input id="sportPoints" type="number" min="0" step="1" value="3"></div>
+      </div>
+      <button class="good full" style="margin-top:12px" onclick="addSport()">Sport als Minuspunkte eintragen</button>
+    </div>
+  </section>
+
+  <section id="scanView" class="view">
+    <div class="card">
+      <div class="title">Barcode scannen</div>
+      <p class="muted">Kamera-Scan benötigt HTTPS und Browser-Unterstützung. Alternativ Barcode eintippen.</p>
+      <div class="scanbox"><video id="video" playsinline muted></video><div class="scanline"></div></div>
+      <div class="grid2" style="margin-top:10px">
+        <button onclick="startScanner()">Kamera starten</button>
+        <button class="secondary" onclick="stopScanner()">Kamera stoppen</button>
+      </div>
+      <label>Barcode</label>
+      <div class="row"><input class="grow" id="barcodeInput" inputmode="numeric" placeholder="z. B. 3017624010701"><button onclick="lookupBarcode()">Suchen</button></div>
+      <div id="scanStatus" class="muted" style="margin-top:8px"></div>
+    </div>
+    <div id="productCard" class="card" style="display:none">
+      <div class="row"><div class="grow"><div class="title" id="pName"></div><div class="muted" id="pBrand"></div></div><div class="points" id="pPoints"></div></div>
+      <div id="pImageWrap" style="margin-top:10px"></div>
+      <div class="grid3" id="nutriGrid" style="margin-top:10px"></div>
+      <details><summary>Inhaltsstoffe</summary><p id="pIngredients" class="muted"></p></details>
+      <div id="productWarning" class="notice" style="display:none;margin-top:10px"></div>
+      <label>Menge für „Heute“ (g)</label>
+      <input id="addGrams" type="number" min="1" step="1" value="100">
+      <div class="row" style="margin-top:10px">
+        <button class="grow" onclick="addCurrentProductToToday()">Zu Heute hinzufügen</button>
+        <button class="secondary" onclick="saveCurrentProduct()">Speichern</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="title">Lebensmittel manuell</div>
+      <label>Name</label><input id="mName" placeholder="Lebensmittel">
+      <div class="grid2">
+        <div><label>Fett g</label><input id="mFat" type="number" step=".1" value="0"></div>
+        <div><label>ges. Fett g</label><input id="mSat" type="number" step=".1" value="0"></div>
+        <div><label>KH g</label><input id="mCarbs" type="number" step=".1" value="0"></div>
+        <div><label>Zucker g</label><input id="mSugar" type="number" step=".1" value="0"></div>
+        <div><label>Ballaststoffe g</label><input id="mFiber" type="number" step=".1" value="0"></div>
+        <div><label>Eiweiß g</label><input id="mProtein" type="number" step=".1" value="0"></div>
+      </div>
+      <div class="muted" style="margin-top:8px">Angaben jeweils pro 100 g.</div>
+      <button class="full" style="margin-top:12px" onclick="createManualProduct()">Berechnen & anzeigen</button>
+    </div>
+  </section>
+
+  <section id="weekView" class="view">
+    <div class="card hero">
+      <div class="muted">Diese Woche</div>
+      <div class="grid3" style="margin-top:8px">
+        <div class="metric"><span class="muted">Soll</span><b id="weekTarget">210</b></div>
+        <div class="metric"><span class="muted">Ist</span><b id="weekActual">0</b></div>
+        <div class="metric"><span class="muted">Übrig</span><b id="weekRemaining">210</b></div>
+      </div>
+    </div>
+    <div class="card"><div class="title">Tage</div><div id="weekDays"></div></div>
+  </section>
+
+  <section id="recipesView" class="view">
+    <div class="card">
+      <div class="title">Gericht zusammenstellen</div>
+      <label>Name des Gerichts</label><input id="recipeName" placeholder="z. B. Frühstücksbowl">
+      <label>Zutat</label><select id="ingredientSelect"></select>
+      <div class="row">
+        <div class="grow"><label>Menge (g)</label><input id="ingredientGrams" type="number" min="1" value="100"></div>
+        <button style="margin-top:28px" onclick="addIngredient()">Hinzufügen</button>
+      </div>
+      <div id="recipeIngredients"></div>
+      <div class="row" style="margin-top:12px"><div class="grow title">Gesamtpunkte</div><div class="points" id="recipePoints">0</div></div>
+      <label>Portionen</label><input id="recipeServings" type="number" min="1" step="1" value="1" oninput="renderRecipeBuilder()">
+      <div class="muted" id="recipePerServing">0 Punkte pro Portion</div>
+      <div class="grid2" style="margin-top:12px">
+        <button onclick="saveRecipe()">Gericht speichern</button>
+        <button class="secondary" onclick="addRecipeToToday()">Portion zu Heute</button>
+      </div>
+    </div>
+    <div class="card"><div class="title">Gespeicherte Lebensmittel & Gerichte</div><div id="savedLibrary"></div></div>
+  </section>
+
+  <section id="settingsView" class="view">
+    <div class="card">
+      <div class="title">Punkteziel</div>
+      <label>Sollpunkte pro Tag</label><input id="targetInput" type="number" min="0" step="1">
+      <button class="full" style="margin-top:12px" onclick="saveSettings()">Speichern</button>
+    </div>
+    <div class="card">
+      <div class="title">Formel</div>
+      <p class="muted">Aktuell ist die vereinbarte RL3-Punktefunktion hinterlegt. Kalorien werden nicht direkt verwendet. Zucker darf nicht größer als Kohlenhydrate und gesättigtes Fett nicht größer als Gesamtfett sein.</p>
+      <button class="danger full" onclick="resetData()">Alle lokalen Daten löschen</button>
+    </div>
+  </section>
+</main>
+
+<nav>
+  <button data-view="todayView" class="active"><span class="ico">●</span>Heute</button>
+  <button data-view="scanView"><span class="ico">▣</span>Scan</button>
+  <button data-view="weekView"><span class="ico">▥</span>Woche</button>
+  <button data-view="recipesView"><span class="ico">☰</span>Gerichte</button>
+  <button data-view="settingsView"><span class="ico">⚙</span>Setup</button>
+</nav>
+
+<script>
+const STORE_KEY = "punkteApp_v1";
+const defaultState = {target:30, entries:[], products:[], recipes:[]};
+let state = loadState();
+let currentProduct = null;
+let recipeDraft = [];
+let scannerStream = null;
+let scanTimer = null;
+
+function loadState(){try{return {...defaultState,...JSON.parse(localStorage.getItem(STORE_KEY)||"{}")}}catch{return {...defaultState}}}
+function saveState(){localStorage.setItem(STORE_KEY, JSON.stringify(state)); renderAll()}
+const n=v=>Number(v)||0;
+const round1=v=>Math.round(v*10)/10;
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
+function fiberDeduction(f){
+  f=n(f);
+  if(f<=5) return 0;
+  if(f<=20) return 2;
+  if(f<=50) return Math.min(Math.floor((f-20)/10)+3,6);
+  return 10;
+}
+function proteinEffect(p){p=n(p); return p>30 ? Math.floor((p-30)/30)+1 : 0}
+
+function calculatePoints(x){
+  const fat=n(x.fat), sat=n(x.sat), carbs=n(x.carbs), sugar=n(x.sugar), fiber=n(x.fiber), protein=n(x.protein);
+  if(sugar>carbs) return {ok:false,error:"Zucker ist größer als Kohlenhydrate."};
+  if(sat>fat) return {ok:false,error:"Gesättigte Fettsäuren sind größer als Gesamtfett."};
+  // RL3: komponentenweise Aufrundung
+  const fatPts=Math.ceil(fat/4);
+  const satPts=Math.ceil(sat/3);
+  const carbPts=Math.ceil(Math.max(carbs/7, sugar/8));
+  const sugarPts=Math.ceil(sugar/8);
+  const points=Math.max(0, Math.ceil(fatPts+satPts+carbPts+sugarPts-fiberDeduction(fiber)+proteinEffect(protein)));
+  return {ok:true,points,parts:{fatPts,satPts,carbPts,sugarPts,fiberDeduction:fiberDeduction(fiber),proteinEffect:proteinEffect(protein)}};
+}
+function scaleNutrients(p, grams){
+  const f=n(grams)/100;
+  return {fat:n(p.fat)*f,sat:n(p.sat)*f,carbs:n(p.carbs)*f,sugar:n(p.sugar)*f,fiber:n(p.fiber)*f,protein:n(p.protein)*f};
+}
+function localDate(d=new Date()){
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+function mondayOf(date=new Date()){
+  const d=new Date(date); d.setHours(0,0,0,0); const day=(d.getDay()+6)%7; d.setDate(d.getDate()-day); return d;
+}
+function addDays(d,days){const x=new Date(d);x.setDate(x.getDate()+days);return x}
+function pointsForDate(ds){return state.entries.filter(e=>e.date===ds).reduce((a,e)=>a+n(e.points),0)}
+
+document.querySelectorAll("nav button").forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(btn.dataset.view).classList.add("active");
+  document.getElementById("pageTitle").textContent=btn.textContent.trim();
+  if(btn.dataset.view!=="scanView") stopScanner();
+  renderAll();
+});
+
+function renderAll(){
+  renderToday();renderWeek();renderLibrary();renderRecipeBuilder();
+  document.getElementById("targetInput").value=state.target;
+}
+function renderToday(){
+  const ds=localDate(), actual=pointsForDate(ds), remaining=n(state.target)-actual;
+  todayTarget.textContent=state.target;todayActual.textContent=actual;todayRemaining.textContent=remaining;
+  const es=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);
+  todayList.innerHTML=es.length?es.map(e=>`<div class="item row">
+    <div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||"")}</div></div>
+    <div class="right"><b class="${e.points<0?"negative":"positive"}">${e.points>0?"+":""}${e.points}</b><br><button class="secondary smallbtn" onclick="deleteEntry('${e.id}')">Löschen</button></div>
+  </div>`).join(""):`<p class="muted">Noch nichts eingetragen.</p>`;
+}
+function renderWeek(){
+  const mon=mondayOf(); let actual=0; const rows=[];
+  for(let i=0;i<7;i++){const d=addDays(mon,i),ds=localDate(d),p=pointsForDate(ds);actual+=p;
+    rows.push(`<div class="item row"><div class="grow"><b>${["Mo","Di","Mi","Do","Fr","Sa","So"][i]}</b><div class="muted">${d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}</div></div><div><b>${p}</b> / ${state.target}</div></div>`);
+  }
+  const target=n(state.target)*7;weekTarget.textContent=target;weekActual.textContent=actual;weekRemaining.textContent=target-actual;weekDays.innerHTML=rows.join("");
+}
+function deleteEntry(id){state.entries=state.entries.filter(e=>e.id!==id);saveState()}
+function addSport(){
+  const name=sportName.value.trim()||"Sport", pts=Math.abs(Math.round(n(sportPoints.value)));
+  state.entries.push({id:crypto.randomUUID(),date:localDate(),ts:Date.now(),name,detail:"Sport",points:-pts,type:"sport"});saveState();
+}
+function saveSettings(){state.target=Math.max(0,Math.round(n(targetInput.value)));saveState()}
+function resetData(){if(confirm("Wirklich alle lokal gespeicherten Daten löschen?")){state={...defaultState};localStorage.removeItem(STORE_KEY);renderAll()}}
+
+async function lookupBarcode(codeOverride){
+  stopScanner();
+  const code=String(codeOverride||barcodeInput.value).trim();
+  if(!code){scanStatus.textContent="Bitte Barcode eingeben.";return}
+  barcodeInput.value=code;scanStatus.textContent="Produkt wird geladen …";
+  try{
+    const fields="code,product_name,brands,image_front_small_url,ingredients_text_de,ingredients_text,nutriments";
+    const url=`https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(code)}.json?fields=${encodeURIComponent(fields)}`;
+    const r=await fetch(url); if(!r.ok) throw new Error("HTTP "+r.status);
+    const data=await r.json();
+    if(data.status!==1||!data.product){scanStatus.textContent="Produkt nicht gefunden. Du kannst es unten manuell anlegen.";return}
+    const p=data.product, nu=p.nutriments||{};
+    currentProduct={
+      id:"barcode:"+code,barcode:code,name:p.product_name||"Unbekanntes Produkt",brand:p.brands||"",
+      image:p.image_front_small_url||"",ingredients:p.ingredients_text_de||p.ingredients_text||"",
+      fat:n(nu.fat_100g),sat:n(nu["saturated-fat_100g"]),carbs:n(nu.carbohydrates_100g),
+      sugar:n(nu.sugars_100g),fiber:n(nu.fiber_100g),protein:n(nu.proteins_100g)
+    };
+    scanStatus.textContent="Produkt gefunden.";showProduct(currentProduct);
+  }catch(e){scanStatus.textContent="Abruf fehlgeschlagen. Internetverbindung prüfen oder Produkt manuell eingeben."}
+}
+function showProduct(p){
+  productCard.style.display="block";pName.textContent=p.name;pBrand.textContent=p.brand||"";
+  const calc=calculatePoints(p);pPoints.textContent=calc.ok?calc.points+" P":"–";
+  pImageWrap.innerHTML=p.image?`<img src="${esc(p.image)}" alt="" style="max-height:150px;max-width:100%;border-radius:12px">`:"";
+  nutriGrid.innerHTML=[
+    ["Fett",p.fat],["ges. Fett",p.sat],["KH",p.carbs],["Zucker",p.sugar],["Ballastst.",p.fiber],["Eiweiß",p.protein]
+  ].map(([k,v])=>`<div class="metric"><span class="muted">${k}</span><b style="font-size:18px">${round1(v)} g</b></div>`).join("");
+  pIngredients.textContent=p.ingredients||"Keine Zutatenliste vorhanden.";
+  productWarning.style.display=calc.ok?"none":"block";productWarning.textContent=calc.ok?"":calc.error;
+}
+function createManualProduct(){
+  currentProduct={id:"manual:"+crypto.randomUUID(),name:mName.value.trim()||"Manuelles Lebensmittel",brand:"Manuell",
+    fat:n(mFat.value),sat:n(mSat.value),carbs:n(mCarbs.value),sugar:n(mSugar.value),fiber:n(mFiber.value),protein:n(mProtein.value),ingredients:""};
+  showProduct(currentProduct);productCard.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function saveCurrentProduct(){
+  if(!currentProduct)return;
+  const i=state.products.findIndex(p=>p.id===currentProduct.id);
+  if(i>=0)state.products[i]=currentProduct;else state.products.push(currentProduct);
+  saveState();scanStatus.textContent="Lebensmittel gespeichert.";
+}
+function addCurrentProductToToday(){
+  if(!currentProduct)return; const g=Math.max(1,n(addGrams.value)); const scaled=scaleNutrients(currentProduct,g),calc=calculatePoints(scaled);
+  if(!calc.ok){productWarning.style.display="block";productWarning.textContent=calc.error;return}
+  saveCurrentProduct();
+  state.entries.push({id:crypto.randomUUID(),date:localDate(),ts:Date.now(),name:currentProduct.name,detail:`${g} g`,points:calc.points,type:"food"});
+  saveState();
+}
+
+async function startScanner(){
+  scanStatus.textContent="";
+  if(!navigator.mediaDevices?.getUserMedia){scanStatus.textContent="Kamera-Zugriff wird von diesem Browser nicht unterstützt.";return}
+  if(!("BarcodeDetector" in window)){scanStatus.textContent="BarcodeDetector wird hier nicht unterstützt. Bitte Barcode eintippen.";return}
+  try{
+    const formats=await BarcodeDetector.getSupportedFormats();
+    const wanted=["ean_13","ean_8","upc_a","upc_e","code_128"].filter(x=>formats.includes(x));
+    const detector=new BarcodeDetector({formats:wanted.length?wanted:formats});
+    scannerStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+    video.srcObject=scannerStream;await video.play();scanStatus.textContent="Kamera aktiv – Barcode vor die Kamera halten.";
+    scanTimer=setInterval(async()=>{try{const codes=await detector.detect(video);if(codes.length){const raw=codes[0].rawValue;stopScanner();lookupBarcode(raw)}}catch{}},500);
+  }catch(e){scanStatus.textContent="Kamera konnte nicht gestartet werden. Prüfe Berechtigung und HTTPS."}
+}
+function stopScanner(){
+  if(scanTimer){clearInterval(scanTimer);scanTimer=null}
+  if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null}
+  if(video)video.srcObject=null;
+}
+
+function libraryItems(){
+  return [...state.products.map(p=>({...p,kind:"product"})),...state.recipes.map(r=>({...r,kind:"recipe"}))];
+}
+function renderLibrary(){
+  const items=libraryItems();
+  ingredientSelect.innerHTML=items.filter(x=>x.kind==="product").length
+    ?items.filter(x=>x.kind==="product").map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join("")
+    :`<option value="">Erst ein Lebensmittel speichern</option>`;
+  savedLibrary.innerHTML=items.length?items.map(x=>{
+    if(x.kind==="product"){const c=calculatePoints(x);return `<div class="item row"><div class="grow"><div class="item-name">${esc(x.name)}</div><div class="muted">${c.ok?c.points+" P / 100 g":"nicht berechenbar"}</div></div></div>`}
+    return `<div class="item row"><div class="grow"><div class="item-name">${esc(x.name)}</div><div class="muted">${x.pointsPerServing} P / Portion · ${x.servings} Portion(en)</div></div><button class="smallbtn" onclick="addSavedRecipeToToday('${x.id}')">+ Heute</button></div>`;
+  }).join(""):`<p class="muted">Noch nichts gespeichert.</p>`;
+}
+function addIngredient(){
+  const p=state.products.find(x=>x.id===ingredientSelect.value);if(!p)return;
+  recipeDraft.push({id:crypto.randomUUID(),productId:p.id,name:p.name,grams:Math.max(1,n(ingredientGrams.value))});renderRecipeBuilder();
+}
+function renderRecipeBuilder(){
+  let total=0;
+  recipeIngredients.innerHTML=recipeDraft.length?recipeDraft.map(i=>{
+    const p=state.products.find(x=>x.id===i.productId);const c=p?calculatePoints(scaleNutrients(p,i.grams)):{ok:false};const pts=c.ok?c.points:0;total+=pts;
+    return `<div class="item row"><div class="grow"><b>${esc(i.name)}</b><div class="muted">${i.grams} g · ${pts} P</div></div><button class="danger smallbtn" onclick="removeIngredient('${i.id}')">×</button></div>`;
+  }).join(""):`<p class="muted">Noch keine Zutaten.</p>`;
+  const servings=Math.max(1,Math.round(n(recipeServings.value)||1));recipePoints.textContent=total;recipePerServing.textContent=`${Math.round(total/servings)} Punkte pro Portion`;
+}
+function removeIngredient(id){recipeDraft=recipeDraft.filter(x=>x.id!==id);renderRecipeBuilder()}
+function currentRecipeData(){
+  let total=0;for(const i of recipeDraft){const p=state.products.find(x=>x.id===i.productId);if(p){const c=calculatePoints(scaleNutrients(p,i.grams));if(c.ok)total+=c.points}}
+  const servings=Math.max(1,Math.round(n(recipeServings.value)||1));
+  return {name:recipeName.value.trim()||"Mein Gericht",ingredients:[...recipeDraft],servings,totalPoints:total,pointsPerServing:Math.round(total/servings)};
+}
+function saveRecipe(){
+  if(!recipeDraft.length)return alert("Bitte mindestens eine Zutat hinzufügen.");
+  const r=currentRecipeData();r.id="recipe:"+crypto.randomUUID();state.recipes.push(r);saveState();
+}
+function addRecipeToToday(){
+  if(!recipeDraft.length)return alert("Bitte mindestens eine Zutat hinzufügen.");
+  const r=currentRecipeData();state.entries.push({id:crypto.randomUUID(),date:localDate(),ts:Date.now(),name:r.name,detail:"1 Portion",points:r.pointsPerServing,type:"recipe"});saveState();
+}
+function addSavedRecipeToToday(id){
+  const r=state.recipes.find(x=>x.id===id);if(!r)return;
+  state.entries.push({id:crypto.randomUUID(),date:localDate(),ts:Date.now(),name:r.name,detail:"1 Portion",points:r.pointsPerServing,type:"recipe"});saveState();
+}
+
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+renderAll();
+</script>
+</body>
+</html>
