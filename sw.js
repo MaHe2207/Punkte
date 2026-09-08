@@ -1,4 +1,4 @@
-const CACHE = 'meine-punkte-v2';
+const CACHE = 'meine-punkte-v3';
 const ASSETS = ['./', './index.html', './manifest.json'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
