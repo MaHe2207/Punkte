@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
+<link rel="icon" type="image/png" href="./icon-192.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#111827" />
@@ -83,11 +84,11 @@
 <div id="householdShell" class="auth-shell hidden">
   <div class="card">
     <div class="title">Haushalt einrichten</div>
-    <p class="muted">Erstelle einen gemeinsamen Haushalt oder tritt mit einem Einladungscode bei.</p>
+    <p class="muted">Erstelle einen gemeinsamen Haushalt oder tritt mit einem Haushalts-ID bei.</p>
     <label>Name</label><input id="newHouseholdName" value="Unser Haushalt">
     <button class="full" style="margin-top:10px" onclick="createHousehold()">Haushalt erstellen</button>
-    <label>Einladungscode</label><input id="joinCode" placeholder="z. B. A1B2C3D4" autocapitalize="characters">
-    <button class="secondary full" style="margin-top:10px" onclick="joinHousehold()">Mit Code beitreten</button>
+    <label>Haushalts-ID</label><input id="joinCode" placeholder="z. B. A1B2C3D4" autocapitalize="characters">
+    <button class="secondary full" style="margin-top:10px" onclick="joinHousehold()">Haushalt verbinden</button>
     <div id="householdStatus" class="statusline muted"></div>
   </div>
 </div>
@@ -96,9 +97,9 @@
     <div class="card hero">
       <div class="muted">Heute</div>
       <div class="grid3" style="margin-top:8px">
-        <div class="metric"><span class="muted">Heute Ist</span><b id="todayActual">0</b></div>
-        <div class="metric"><span class="muted">Woche Ist</span><b id="todayWeekActual">0</b></div>
-        <div class="metric"><span class="muted">Woche übrig</span><b id="todayRemaining">0</b></div>
+        <div class="metric"><span class="muted">Tagespunkte übrig</span><b id="todayActual">30</b></div>
+        <div class="metric"><span class="muted">Heute verbraucht</span><b id="todayWeekActual">0</b></div>
+        <div class="metric"><span class="muted">Wochenpunkte übrig</span><b id="todayRemaining">35</b></div>
       </div>
     </div>
     <div class="card">
@@ -211,17 +212,17 @@
     <div class="card hero">
       <div class="muted">Diese Woche</div>
       <div class="grid3" style="margin-top:8px">
-        <div class="metric"><span class="muted">Wochen-Soll</span><b id="weekTarget">210</b></div>
-        <div class="metric"><span class="muted">Ist</span><b id="weekActual">0</b></div>
-        <div class="metric"><span class="muted">Übrig</span><b id="weekRemaining">210</b></div>
+        <div class="metric"><span class="muted">Wochenpunkte Start</span><b id="weekTarget">35</b></div>
+        <div class="metric"><span class="muted">Wochenpunkte genutzt</span><b id="weekActual">0</b></div>
+        <div class="metric"><span class="muted">Wochenpunkte übrig</span><b id="weekRemaining">35</b></div>
       </div>
     </div>
     <div class="card">
       <div class="grid2">
-        <div class="metric"><span class="muted">Übertrag aus Vorwoche</span><b id="carryIn">0</b></div>
-        <div class="metric"><span class="muted">Möglicher Übertrag nächste Woche</span><b id="carryOut">0</b></div>
+        <div class="metric"><span class="muted">Tages-Restpunkte umgewandelt</span><b id="carryIn">0</b></div>
+        <div class="metric"><span class="muted">Heute bisher ungenutzt (max. 4)</span><b id="carryOut">0</b></div>
       </div>
-      <p class="muted" style="margin-bottom:0">Es werden automatisch höchstens 4 nicht verbrauchte Punkte aus der Vorwoche übernommen.</p>
+      <p class="muted" style="margin-bottom:0">Am Tageswechsel wandern bis zu 4 ungenutzte Tagespunkte ins Wochenbudget. Montags startet das Wochenbudget neu.</p>
     </div>
     <div class="card">
       <div class="week-head">
@@ -297,16 +298,19 @@
 
   <section id="settingsView" class="view">
     <div class="card">
-      <div class="title">Wochenziel</div>
-      <label>Sollpunkte pro Woche</label><input id="targetInput" type="number" min="0" step="1">
-      <p class="muted">Das Wochenbudget ist maßgeblich. Bis zu 4 nicht verbrauchte Punkte werden automatisch in die folgende Woche übertragen.</p>
+      <div class="title">Punktebudgets</div>
+      <label>Tagespunkte (jeden Tag neu)</label><input id="dailyTargetInput" type="number" min="0" step="1">
+      <label>Wochenpunkte (jeden Montag neu)</label><input id="targetInput" type="number" min="0" step="1">
+      <p class="muted">Nicht genutzte Tagespunkte werden am Folgetag bis maximal 4 zu Wochenpunkten. Mehrverbrauch reduziert Wochenpunkte, auch unter null. Kein Übertrag zwischen Wochen.</p>
       <button class="full" style="margin-top:12px" onclick="saveSettings()">Speichern</button>
     </div>
     <div class="card">
-      <div class="title">Konto & Haushalt</div>
+      <div class="title">App installieren</div><p class="muted" id="installHint">Installiere Meine Punkte auf deinem Android-Startbildschirm.</p><button id="installButton" class="full" onclick="installApp()">App installieren</button>
+    </div>
+    <div class="card"><div class="title">Konto & Haushalt</div>
       <div class="muted" id="accountInfo">–</div>
       <div class="muted" id="householdInfo" style="margin-top:4px">–</div>
-      <button class="secondary full" style="margin-top:12px" onclick="createInviteCode()">Einladungscode für meine Freundin erstellen</button>
+      <button class="secondary full" style="margin-top:12px" onclick="createInviteCode()">Freundin per Benutzer-ID freigeben</button>
       <div id="inviteCodeBox" class="notice ok" style="display:none;margin-top:10px"></div>
       <button class="danger full" style="margin-top:10px" onclick="logout()">Abmelden</button>
     </div>
@@ -329,20 +333,63 @@
   <button data-view="settingsView"><span class="ico">⚙</span>Einstellungen</button>
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
-const SUPABASE_URL="https://gdckdnoyhyoxnmknsfyp.supabase.co";
-const SUPABASE_KEY="sb_publishable_Rr8stnKGpZ4vrrkYI5pHqA_80kvlQcW";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
-  auth:{
-    persistSession:true,
-    autoRefreshToken:true,
-    detectSessionInUrl:true,
-    storage:window.localStorage
-  }
-});
+firebase.initializeApp({apiKey:"AIzaSyCBFDu6XRnhcT5B-0Gq4qKQuDxqb6qSim8",authDomain:"punkte-88531.firebaseapp.com",projectId:"punkte-88531",storageBucket:"punkte-88531.firebasestorage.app",messagingSenderId:"358303070873",appId:"1:358303070873:web:891379f4696c2717d59608"});
+const auth=firebase.auth(), db=firebase.firestore();
+// Firestore adapter for the existing application data model.
+function collectionPath(table){
+  if(table==='households')return 'households';
+  if(table==='household_members')return `households/${currentHousehold?.id||'unused'}/members`;
+  if(['products','recipes','recipe_items'].includes(table))return `households/${currentHousehold.id}/${table}`;
+  return `users/${currentUser.id}/${table}`;
+}
+function queryTable(table){
+  const spec={table,filters:[],mode:'select',payload:null,opts:{},single:false,maybe:false};
+  const q={
+    select(){return q},eq(k,v){spec.filters.push([k,v]);return q},order(){return q},limit(){return q},
+    insert(v){spec.mode='insert';spec.payload=v;return q},update(v){spec.mode='update';spec.payload=v;return q},
+    upsert(v,o={}){spec.mode='upsert';spec.payload=v;spec.opts=o;return q},delete(){spec.mode='delete';return q},
+    single(){spec.single=true;return run()},maybeSingle(){spec.maybe=true;return run()},then(resolve,reject){return run().then(resolve,reject)}
+  };
+  async function run(){try{
+    const col=db.collection(collectionPath(table));let docs=[];
+    if(spec.mode!=='insert'){
+      // Fetch only household/private collections; filter client-side for compatibility.
+      const snap=await col.get();docs=snap.docs.map(d=>({id:d.id,...d.data()}));
+      docs=docs.filter(d=>spec.filters.every(([k,v])=>d[k]===v));
+    }
+    let result;
+    if(spec.mode==='select')result=spec.single||spec.maybe?(docs[0]||null):docs;
+    else if(spec.mode==='delete'){
+      await Promise.all(docs.map(d=>col.doc(d.id).delete()));result=null;
+    }else if(spec.mode==='update'){
+      await Promise.all(docs.map(d=>col.doc(d.id).update(spec.payload)));result=docs[0]?{...docs[0],...spec.payload}:null;
+    }else{
+      const rows=Array.isArray(spec.payload)?spec.payload:[spec.payload];const saved=[];
+      for(const item of rows){
+        let id=item.id||null;
+        if(!id&&spec.mode==='upsert'){
+          const keys=(spec.opts.onConflict||'').split(',').map(x=>x.trim()).filter(Boolean);
+          const found=keys.length?(await col.get()).docs.find(d=>keys.every(k=>d.data()[k]===item[k])):null;
+          if(found)id=found.id;
+        }
+        if(!id)id=col.doc().id;
+        const data={created_at:new Date().toISOString(),...item};delete data.id;
+        await col.doc(id).set(data,{merge:spec.mode==='upsert'});
+        saved.push({id,...data});
+      }
+      result=Array.isArray(spec.payload)?saved:saved[0];
+    }
+    return {data:result,error:null};
+  }catch(e){console.error('Firestore',table,e);return {data:null,error:{message:e.message||String(e)}}}}
+  return q;
+}
+const sb={from:queryTable};
 const STORE_KEY="punkteApp_cache_v2";
-const defaultState={target:210,entries:[],products:[],recipes:[],weights:[]};
+const defaultState={target:35,dailyTarget:30,entries:[],products:[],recipes:[],weights:[]};
 let state={...defaultState};let currentProduct=null,recipeDraft=[],editingRecipeId=null,editingProductId=null;let scannerStream=null,scanTimer=null;let weekCursor=mondayOf();
 let currentUser=null,currentHousehold=null,authMode='login';
 const n=v=>{if(v===null||v===undefined||v==='')return 0;const x=typeof v==='string'?Number(v.replace(',','.')):Number(v);return Number.isFinite(x)?x:0}, round1=v=>Math.round(v*10)/10;
@@ -365,30 +412,88 @@ function mondayOf(date=new Date()){const d=new Date(date);d.setHours(0,0,0,0);d.
 function addDays(d,x){const a=new Date(d);a.setDate(a.getDate()+x);return a}
 function pointsForDate(ds){return state.entries.filter(e=>e.date===ds).reduce((a,e)=>a+n(e.points),0)}
 function pointsForWeek(mon){let total=0;for(let i=0;i<7;i++)total+=pointsForDate(localDate(addDays(mon,i)));return total}
-function carryForWeek(mon){const prev=addDays(mon,-7);const prevActual=pointsForWeek(prev);return Math.min(4,Math.max(0,n(state.target)-prevActual))}
-function previousWeekCarry(){return carryForWeek(mondayOf())}
-function currentWeekBudget(){return n(state.target)+previousWeekCarry()}
+// Das Budget wird aus datierten Einträgen berechnet, nicht beim Seitenaufruf verändert.
+// Dadurch sind Rückdatierungen und Löschungen konsistent, ohne doppelte Tagesüberträge.
+function dayBudget(ds){
+  const used=pointsForDate(ds),daily=Math.max(0,n(state.dailyTarget));
+  return {used,dailyLeft:Math.max(0,daily-used),weekCost:Math.max(0,used-daily),rollover:Math.min(4,Math.max(0,daily-used))};
+}
+function weekBudget(mon,until=localDate()){
+  const start=Math.max(0,n(state.target));let bonus=0,spent=0;
+  for(let i=0;i<7;i++){
+    const ds=localDate(addDays(mon,i));if(ds>until)break;
+    const d=dayBudget(ds);
+    spent+=d.weekCost;
+    if(ds<until)bonus+=d.rollover; // erst NACH Ende des jeweiligen Tages
+  }
+  return {start,bonus,spent,remaining:start+bonus-spent};
+}
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;updateInstallButton()});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;updateInstallButton();showToast('App installiert ✓')});
+function updateInstallButton(){const btn=document.getElementById('installButton'),hint=document.getElementById('installHint');if(!btn)return;const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;btn.textContent=standalone?'Bereits installiert':deferredInstallPrompt?'App installieren':'Installationsanleitung anzeigen';btn.disabled=standalone;hint.textContent=standalone?'Die App läuft bereits als installierte PWA.':deferredInstallPrompt?'Tippe zum Installieren auf den Button.':'Falls kein Installationsdialog verfügbar ist: Chrome-Menü ⋮ → App installieren oder Zum Startbildschirm hinzufügen.'}
+async function installApp(){if(!deferredInstallPrompt){updateInstallButton();showToast('Chrome-Menü ⋮ → App installieren / Zum Startbildschirm hinzufügen');return}const prompt=deferredInstallPrompt;deferredInstallPrompt=null;await prompt.prompt();await prompt.userChoice;updateInstallButton()}
 function setAuthMode(mode){authMode=mode;loginTab.className=mode==='login'?'':'secondary';signupTab.className=mode==='signup'?'':'secondary';authSubmit.textContent=mode==='login'?'Anmelden':'Registrieren';authPassword.autocomplete=mode==='login'?'current-password':'new-password';authStatus.textContent=''}
-async function submitAuth(){const email=authEmail.value.trim(),password=authPassword.value;if(!email||password.length<6){authStatus.textContent='Bitte E-Mail und Passwort mit mindestens 6 Zeichen eingeben.';return}authSubmit.disabled=true;authStatus.textContent='Bitte warten …';let result=authMode==='login'?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password});authSubmit.disabled=false;if(result.error){authStatus.textContent=result.error.message;return}if(authMode==='signup'&&!result.data.session){authStatus.textContent='Registrierung erfolgreich. Bitte bestätige ggf. die E-Mail und melde dich danach an.';return}authStatus.textContent='Erfolgreich.'}
-async function logout(){await sb.auth.signOut({scope:'local'})}
-async function bootstrap(session){currentUser=session?.user||null;if(!currentUser){authShell.classList.remove('hidden');householdShell.classList.add('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');return}authShell.classList.add('hidden');await loadHousehold();}
-async function loadHousehold(){const {data,error}=await sb.from('household_members').select('household_id,role,households(id,name,owner_id)').eq('user_id',currentUser.id).limit(1);if(error){householdStatus.textContent=error.message;return}if(!data?.length){currentHousehold=null;householdShell.classList.remove('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');return}currentHousehold=data[0].households||{id:data[0].household_id,name:'Unser Haushalt'};householdShell.classList.add('hidden');appMain.classList.remove('hidden');document.querySelector('nav').classList.remove('hidden');await loadCloudData();}
-async function createHousehold(){householdStatus.textContent='Wird erstellt …';const name=newHouseholdName.value.trim()||'Unser Haushalt';const {data:h,error:e}=await sb.from('households').insert({name,owner_id:currentUser.id}).select().single();if(e){householdStatus.textContent=e.message;return}const {error:m}=await sb.from('household_members').insert({household_id:h.id,user_id:currentUser.id,role:'owner'});if(m){householdStatus.textContent=m.message;return}await loadHousehold()}
-async function joinHousehold(){const code=joinCode.value.trim();if(!code)return;householdStatus.textContent='Beitritt …';const {error}=await sb.rpc('join_household_by_code',{invite_code:code});if(error){householdStatus.textContent='Beitritt fehlgeschlagen: '+error.message;return}await loadHousehold()}
-async function createInviteCode(){if(!currentHousehold)return;const {data,error}=await sb.rpc('create_household_invite',{requested_household_id:currentHousehold.id});inviteCodeBox.style.display='block';inviteCodeBox.textContent=error?'Einladung konnte nicht erstellt werden. Bitte zuerst supabase_upgrade.sql ausführen. '+error.message:`Einladungscode: ${data} · 7 Tage gültig · einmal verwendbar`;}
+async function submitAuth(){const email=authEmail.value.trim(),password=authPassword.value;if(!email||password.length<6){authStatus.textContent='Bitte E-Mail und Passwort mit mindestens 6 Zeichen eingeben.';return}authSubmit.disabled=true;try{if(authMode==='login')await auth.signInWithEmailAndPassword(email,password);else await auth.createUserWithEmailAndPassword(email,password);authStatus.textContent='Erfolgreich.'}catch(e){authStatus.textContent=e.message}finally{authSubmit.disabled=false}}
+async function logout(){await auth.signOut()}
+async function bootstrap(user){currentUser=user?{id:user.uid,email:user.email}:null;if(!currentUser){authShell.classList.remove('hidden');householdShell.classList.add('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');return}authShell.classList.add('hidden');await loadHousehold()}
+async function loadHousehold(){try{
+  const userDoc=await db.doc(`users/${currentUser.id}`).get();const hid=userDoc.data()?.householdId;
+  if(!hid){currentHousehold=null;householdShell.classList.remove('hidden');appMain.classList.add('hidden');document.querySelector('nav').classList.add('hidden');householdStatus.textContent=`Deine Benutzer-ID: ${currentUser.id} – gib diese dem Haushaltsbesitzer zum Einladen.`;return}
+  const h=await db.doc(`households/${hid}`).get();const member=await db.doc(`households/${hid}/members/${currentUser.id}`).get();
+  if(!h.exists||!member.exists)throw new Error('Haushalt oder Mitgliedschaft fehlt.');
+  currentHousehold={id:hid,name:h.data().name,owner_id:h.data().ownerId};householdShell.classList.add('hidden');appMain.classList.remove('hidden');document.querySelector('nav').classList.remove('hidden');await loadCloudData();
+}catch(e){householdShell.classList.remove('hidden');householdStatus.textContent=e.message}}
+async function createHousehold(){householdStatus.textContent='Wird erstellt …';try{
+ const ref=db.collection('households').doc(),uid=currentUser.id;
+ await ref.set({name:newHouseholdName.value.trim()||'Unser Haushalt',ownerId:uid,createdAt:new Date().toISOString()});
+ await ref.collection('members').doc(uid).set({role:'owner',userId:uid});
+ await db.doc(`users/${uid}`).set({householdId:ref.id,email:currentUser.email},{merge:true});await loadHousehold()
+}catch(e){householdStatus.textContent=e.message}}
+async function joinHousehold(){const hid=joinCode.value.trim();if(!hid){householdStatus.textContent='Deine Benutzer-ID: '+currentUser.id+' – bitte dem Haushaltsbesitzer schicken. Danach hier die Haushalts-ID eintragen.';return}try{const m=await db.doc(`households/${hid}/members/${currentUser.id}`).get();if(!m.exists)throw Error('Noch keine Freigabe für diesen Haushalt.');await db.doc(`users/${currentUser.id}`).set({householdId:hid,email:currentUser.email},{merge:true});await loadHousehold()}catch(e){householdStatus.textContent=e.message}}
+async function createInviteCode(){if(!currentHousehold)return;inviteCodeBox.style.display='block';if(currentHousehold.owner_id!==currentUser.id){inviteCodeBox.textContent='Nur der Haushaltsbesitzer kann Mitglieder hinzufügen.';return}
+ const uid=prompt('Firebase-Benutzer-ID deiner Freundin eingeben (sie sieht diese auf ihrer Haushaltsseite):');if(!uid)return;
+ try{if(!/^[A-Za-z0-9]{20,40}$/.test(uid))throw Error('Ungültige Benutzer-ID');
+ await db.doc(`households/${currentHousehold.id}/members/${uid}`).set({role:'member',userId:uid});
+ inviteCodeBox.textContent='Freigabe erteilt. Haushalts-ID für deine Freundin: '+currentHousehold.id;
+ }catch(e){inviteCodeBox.textContent='Freigabe fehlgeschlagen: '+e.message}
+}
 async function loadCloudData(){const hid=currentHousehold.id;const [settings,products,daily,sport,recipes,items,weights]=await Promise.all([sb.from('user_settings').select('*').eq('user_id',currentUser.id).maybeSingle(),sb.from('products').select('*').eq('household_id',hid).order('product_name'),sb.from('daily_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false}),sb.from('sport_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false}),sb.from('recipes').select('*').eq('household_id',hid).order('name'),sb.from('recipe_items').select('*'),sb.from('weight_entries').select('*').eq('user_id',currentUser.id).order('entry_date',{ascending:false})]);
-state.target=n(settings.data?.weekly_target)||n(settings.data?.daily_target)*7||210;state.products=(products.data||[]).map(dbToProduct);const dailyEntries=(daily.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.product_name,detail:`${x.amount_grams} g`,points:n(x.points),type:'food',table:'daily_entries'}));const sportEntries=(sport.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.activity,detail:x.minutes?`${x.minutes} Min · Sport`:'Sport',points:-n(x.minus_points),type:'sport',table:'sport_entries'}));state.entries=[...dailyEntries,...sportEntries];state.weights=(weights.data||[]).map(w=>({id:w.id,date:w.entry_date,kg:n(w.weight_kg),notes:w.notes||''}));state.recipes=(recipes.data||[]).map(r=>{const ri=(items.data||[]).filter(i=>i.recipe_id===r.id).map(i=>({id:i.id,productId:i.product_id,grams:n(i.amount_grams),name:state.products.find(p=>p.id===i.product_id)?.name||'Zutat'}));return recipeFromParts(r,ri)});localStorage.setItem(STORE_KEY,JSON.stringify(state));renderAll()}
+state.dailyTarget=Math.max(0,Math.round(settings.data?.daily_target??30));state.target=Math.max(0,Math.round(settings.data?.weekly_extra_target??35));state.products=(products.data||[]).map(dbToProduct);const dailyEntries=(daily.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.product_name,detail:`${x.amount_grams} g`,points:n(x.points),type:'food',table:'daily_entries'}));const sportEntries=(sport.data||[]).map(x=>({id:x.id,date:x.entry_date,ts:new Date(x.created_at).getTime(),name:x.activity,detail:x.minutes?`${x.minutes} Min · Sport`:'Sport',points:-n(x.minus_points),type:'sport',table:'sport_entries'}));state.entries=[...dailyEntries,...sportEntries];state.weights=(weights.data||[]).map(w=>({id:w.id,date:w.entry_date,kg:n(w.weight_kg),notes:w.notes||''}));state.recipes=(recipes.data||[]).map(r=>{const ri=(items.data||[]).filter(i=>i.recipe_id===r.id).map(i=>({id:i.id,productId:i.product_id,grams:n(i.amount_grams),name:state.products.find(p=>p.id===i.product_id)?.name||'Zutat'}));return recipeFromParts(r,ri)});localStorage.setItem(STORE_KEY,JSON.stringify(state));renderAll()}
 function dbToProduct(p){return{id:p.id,barcode:p.barcode||'',name:p.product_name,brand:p.brand||'',image:p.image_url||'',ingredients:p.ingredients_text||'',calories:n(p.calories),fat:n(p.fat),sat:n(p.saturated_fat),carbs:n(p.carbohydrates),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source,createdAt:p.created_at||'',updatedAt:p.updated_at||''}}
 function productToDb(p){return{household_id:currentHousehold.id,barcode:p.barcode||null,product_name:p.name,brand:p.brand||null,image_url:p.image||null,ingredients_text:p.ingredients||null,calories:n(p.calories),fat:n(p.fat),saturated_fat:n(p.sat),carbohydrates:n(p.carbs),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:p.source||'manual',created_by:currentUser.id,updated_at:new Date().toISOString()}}
 function recipeFromParts(r,ingredients){let total=0;for(const i of ingredients){const p=state.products.find(x=>x.id===i.productId);if(p){const c=calculatePoints(scaleNutrients(p,i.grams));if(c.ok)total+=c.points}}const servings=Math.max(1,n(r.servings)||1);return{id:r.id,name:r.name,servings,ingredients,totalPoints:total,pointsPerServing:Math.round(total/servings),createdAt:r.created_at||'',updatedAt:r.updated_at||''}}
 document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(btn.dataset.view).classList.add('active');pageTitle.textContent=btn.textContent.trim();if(btn.dataset.view!=='productsView')stopScanner();renderAll()});
-function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate()}
-function renderToday(){const ds=localDate(),today=pointsForDate(ds),mon=mondayOf(),weekActual=pointsForWeek(mon),budget=currentWeekBudget();todayActual.textContent=today;todayWeekActual.textContent=weekActual;todayRemaining.textContent=budget-weekActual;const list=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);todayList.innerHTML=list.length?list.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Heute ist noch nichts eingetragen.</p>'}
-function renderWeek(){const mon=weekCursor||mondayOf(),actual=pointsForWeek(mon),carry=carryForWeek(mon),budget=n(state.target)+carry,remaining=budget-actual;weekLabel.textContent=`${localDate(mon)===localDate(mondayOf())?'Diese Woche · ':''}${mon.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})} – ${addDays(mon,6).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}`;let rows=[];for(let i=0;i<7;i++){const d=addDays(mon,i),ds=localDate(d),p=pointsForDate(ds),entries=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);const details=entries.length?entries.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Keine Einträge an diesem Tag.</p>';rows.push(`<details class="daybox"><summary class="dayhead"><div class="row"><div class="grow"><b>${['Mo','Di','Mi','Do','Fr','Sa','So'][i]} · ${d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}</b></div><div><b>${p}</b> P</div></div></summary><div class="daydetails">${details}</div></details>`)}weekTarget.textContent=budget;weekActual.textContent=actual;weekRemaining.textContent=remaining;carryIn.textContent=carry;carryOut.textContent=Math.min(4,Math.max(0,remaining));weekDays.innerHTML=rows.join('')}
+function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;dailyTargetInput.value=state.dailyTarget;updateInstallButton();accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate()}
+function renderToday(){
+  const ds=localDate(),day=dayBudget(ds),wk=weekBudget(mondayOf());
+  todayActual.textContent=day.dailyLeft;todayWeekActual.textContent=day.used;todayRemaining.textContent=wk.remaining;
+  const list=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);
+  todayList.innerHTML=list.length?list.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Heute ist noch nichts eingetragen.</p>';
+}
+function renderWeek(){
+  const mon=weekCursor||mondayOf(),wk=weekBudget(mon),today=localDate();
+  weekLabel.textContent=`${localDate(mon)===localDate(mondayOf())?'Diese Woche · ':''}${mon.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})} – ${addDays(mon,6).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}`;
+  let rows=[];
+  for(let i=0;i<7;i++){
+    const d=addDays(mon,i),ds=localDate(d),p=pointsForDate(ds),day=dayBudget(ds),entries=state.entries.filter(e=>e.date===ds).sort((a,b)=>b.ts-a.ts);
+    const details=entries.length?entries.map(e=>`<div class="item row"><div class="grow"><div class="item-name">${esc(e.name)}</div><div class="muted">${esc(e.detail||'')}</div></div><div class="right"><b class="${e.points<0?'negative':'positive'}">${e.points>0?'+':''}${e.points} P</b><br><button class="danger smallbtn" onclick="removeEntry('${e.id}','${e.table}')">Löschen</button></div></div>`).join(''):'<p class="muted">Keine Einträge an diesem Tag.</p>';
+    const status=ds>today?'Noch nicht begonnen':`Tagesrest ${day.dailyLeft} P · ${ds<today?'Übertrag':'möglicher Übertrag'} ${day.rollover} P · Wochenverbrauch ${day.weekCost} P`;
+    rows.push(`<details class="daybox"><summary class="dayhead"><div class="row"><div class="grow"><b>${['Mo','Di','Mi','Do','Fr','Sa','So'][i]} · ${d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}</b><div class="muted">${status}</div></div><div><b>${p}</b> P</div></div></summary><div class="daydetails">${details}</div></details>`);
+  }
+  weekTarget.textContent=wk.start;weekActual.textContent=wk.spent;weekRemaining.textContent=wk.remaining;carryIn.textContent=wk.bonus;
+  const todayInWeek=localDate(mondayOf())===localDate(mon);
+  carryOut.textContent=todayInWeek?dayBudget(today).rollover:'–';weekDays.innerHTML=rows.join('');
+}
 function changeWeek(delta){weekCursor=addDays(weekCursor||mondayOf(),delta*7);renderWeek()}
 function goCurrentWeek(){weekCursor=mondayOf();renderWeek()}
-async function saveSettings(){const weeklyTarget=Math.max(0,Math.round(n(targetInput.value)));const {error}=await sb.from('user_settings').upsert({user_id:currentUser.id,weekly_target:weeklyTarget,daily_target:Math.round(weeklyTarget/7),updated_at:new Date().toISOString()});if(error){alert('Wochenziel konnte nicht gespeichert werden: '+error.message);return}state.target=weeklyTarget;renderAll();showToast(`Wochenziel auf ${weeklyTarget} P gespeichert ✓`)}
-function resetData(){if(confirm('Lokalen Cache löschen? Deine Supabase-Daten bleiben erhalten.')){localStorage.removeItem(STORE_KEY);alert('Lokaler Cache gelöscht.')}}
+async function saveSettings(){
+ const weeklyTarget=Math.max(0,Math.round(n(targetInput.value))),dailyTarget=Math.max(0,Math.round(n(dailyTargetInput.value)));
+ const {error}=await sb.from('user_settings').upsert({user_id:currentUser.id,weekly_extra_target:weeklyTarget,weekly_target:weeklyTarget,daily_target:dailyTarget,updated_at:new Date().toISOString()});
+ if(error){alert('Punktebudgets konnten nicht gespeichert werden: '+error.message);return}
+ state.target=weeklyTarget;state.dailyTarget=dailyTarget;renderAll();showToast(`Täglich ${dailyTarget} P · wöchentlich ${weeklyTarget} P gespeichert ✓`);
+}
+function resetData(){if(confirm('Lokalen Cache löschen? Deine Firebase-Daten bleiben erhalten.')){localStorage.removeItem(STORE_KEY);alert('Lokaler Cache gelöscht.')}}
 function hasUsefulNutrition(p){return [p.fat,p.sat,p.carbs,p.sugar,p.fiber,p.protein,p.calories].some(v=>n(v)>0)}
 function nutrientValue(nu,...keys){for(const key of keys){if(nu[key]!==undefined&&nu[key]!==null&&nu[key]!=='')return n(nu[key])}return 0}
 function productFromOff(p,code){const nu=p?.nutriments||{};return{id:null,barcode:code,name:p?.product_name_de||p?.product_name||p?.generic_name_de||p?.generic_name||'Unbekanntes Produkt',brand:p?.brands||'',image:p?.image_front_small_url||p?.image_front_url||'',ingredients:p?.ingredients_text_de||p?.ingredients_text||'',calories:nutrientValue(nu,'energy-kcal_100g','energy-kcal','energy-kcal_value'),fat:nutrientValue(nu,'fat_100g','fat','fat_value'),sat:nutrientValue(nu,'saturated-fat_100g','saturated-fat','saturated-fat_value'),carbs:nutrientValue(nu,'carbohydrates_100g','carbohydrates','carbohydrates_value'),sugar:nutrientValue(nu,'sugars_100g','sugars','sugars_value'),fiber:nutrientValue(nu,'fiber_100g','fibre_100g','fiber','fibre','fiber_value'),protein:nutrientValue(nu,'proteins_100g','proteins','proteins_value'),source:'open_food_facts'}}
@@ -399,7 +504,7 @@ const urls=[
 `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(code)}.json?fields=${encodeURIComponent(fields)}`
 ];
 for(const url of urls){try{const r=await fetch(url,{method:'GET',mode:'cors',cache:'no-store',headers:{'Accept':'application/json'}});if(!r.ok){lastErr=new Error('Open Food Facts HTTP '+r.status);continue}const candidate=await r.json();if(candidate&&candidate.product){data=candidate;break}lastErr=new Error('Kein Produktobjekt in der Antwort')}catch(err){lastErr=err}}
-if(!data||!data.product){if(ownProduct){currentProduct=ownProduct;showProduct(currentProduct);scanStatus.textContent='Extern keine besseren Daten gefunden. Bitte Nährwerte manuell ergänzen.';return}scanStatus.textContent='Produkt nicht bei Open Food Facts gefunden. Du kannst es unten manuell anlegen.';return}currentProduct=productFromOff(data.product,code);if(ownProduct)currentProduct.id=ownProduct.id;showProduct(currentProduct);if(!hasUsefulNutrition(currentProduct)){scanStatus.textContent='Produkt gefunden, aber Open Food Facts enthält dafür keine verwertbaren Nährwerte. Bitte manuell ergänzen.';return}const calc=calculatePoints(currentProduct);if(calc.ok){const saved=await saveCurrentProduct(true);scanStatus.textContent=saved?'Produktdaten geladen, Punkte berechnet und eure Datenbank aktualisiert.':'Produktdaten geladen, konnten aber nicht in Supabase gespeichert werden.'}else scanStatus.textContent='Produkt gefunden, aber die Nährwerte sind nicht plausibel: '+calc.error}catch(e){console.error(e);if(ownProduct){currentProduct=ownProduct;showProduct(currentProduct)}scanStatus.textContent='Open Food Facts konnte nicht erreicht werden: '+(e?.message||e)+'. Bitte erneut versuchen oder Produkt manuell eingeben.'}}
+if(!data||!data.product){if(ownProduct){currentProduct=ownProduct;showProduct(currentProduct);scanStatus.textContent='Extern keine besseren Daten gefunden. Bitte Nährwerte manuell ergänzen.';return}scanStatus.textContent='Produkt nicht bei Open Food Facts gefunden. Du kannst es unten manuell anlegen.';return}currentProduct=productFromOff(data.product,code);if(ownProduct)currentProduct.id=ownProduct.id;showProduct(currentProduct);if(!hasUsefulNutrition(currentProduct)){scanStatus.textContent='Produkt gefunden, aber Open Food Facts enthält dafür keine verwertbaren Nährwerte. Bitte manuell ergänzen.';return}const calc=calculatePoints(currentProduct);if(calc.ok){const saved=await saveCurrentProduct(true);scanStatus.textContent=saved?'Produktdaten geladen, Punkte berechnet und eure Datenbank aktualisiert.':'Produktdaten geladen, konnten aber nicht in Firebase gespeichert werden.'}else scanStatus.textContent='Produkt gefunden, aber die Nährwerte sind nicht plausibel: '+calc.error}catch(e){console.error(e);if(ownProduct){currentProduct=ownProduct;showProduct(currentProduct)}scanStatus.textContent='Open Food Facts konnte nicht erreicht werden: '+(e?.message||e)+'. Bitte erneut versuchen oder Produkt manuell eingeben.'}}
 function showProduct(p){productCard.style.display='block';pName.textContent=p.name;pBrand.textContent=p.brand||'';const calc=calculatePoints(p);pPoints.textContent=calc.ok?calc.points+' P':'–';pImageWrap.innerHTML=p.image?`<img src="${esc(p.image)}" alt="" style="max-height:150px;max-width:100%;border-radius:12px">`:'';nutriGrid.innerHTML=[['Fett',p.fat],['ges. Fett',p.sat],['KH',p.carbs],['Zucker',p.sugar],['Ballastst.',p.fiber],['Eiweiß',p.protein]].map(([k,v])=>`<div class="metric"><span class="muted">${k}</span><b style="font-size:18px">${round1(v)} g</b></div>`).join('');pIngredients.textContent=p.ingredients||'Keine Zutatenliste vorhanden.';productWarning.style.display=calc.ok?'none':'block';productWarning.textContent=calc.ok?'':calc.error}
 function createManualProduct(){currentProduct={id:null,barcode:barcodeInput.value.trim()||'',name:mName.value.trim()||'Manuelles Lebensmittel',brand:'Manuell',fat:n(mFat.value),sat:n(mSat.value),carbs:n(mCarbs.value),sugar:n(mSugar.value),fiber:n(mFiber.value),protein:n(mProtein.value),ingredients:'',source:'manual'};showProduct(currentProduct);productCard.scrollIntoView({behavior:'smooth',block:'start'})}
 async function saveCurrentProduct(silent=false){if(!currentProduct)return null;const calc=calculatePoints(currentProduct);if(!calc.ok){if(!silent)alert(calc.error);return null}let q=sb.from('products');const payload=productToDb(currentProduct);let res;if(currentProduct.id)res=await q.update(payload).eq('id',currentProduct.id).select().single();else if(currentProduct.barcode)res=await q.upsert(payload,{onConflict:'household_id,barcode'}).select().single();else res=await q.insert(payload).select().single();if(res.error){if(!silent)alert(res.error.message);return null}currentProduct=dbToProduct(res.data);const i=state.products.findIndex(p=>p.id===currentProduct.id);if(i>=0)state.products[i]=currentProduct;else state.products.push(currentProduct);renderAll();if(!silent){scanStatus.textContent='Lebensmittel in eurer gemeinsamen Datenbank gespeichert.';showToast('Lebensmittel gespeichert ✓')}return currentProduct}
@@ -481,9 +586,10 @@ async function saveWeight(){
 async function deleteWeight(id){
   if(!confirm('Diesen Gewichtseintrag löschen?'))return;const {error}=await sb.from('weight_entries').delete().eq('id',id);if(error){showToast('Gewicht konnte nicht gelöscht werden: '+error.message,'error');return}state.weights=state.weights.filter(w=>w.id!==id);renderWeight();showToast('Gewichtseintrag gelöscht ✓');
 }
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&currentUser&&currentHousehold)renderAll()});
+window.addEventListener('focus',()=>{if(currentUser&&currentHousehold)renderAll()});
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-sb.auth.onAuthStateChange((_event,session)=>setTimeout(()=>bootstrap(session),0));
-(async()=>{const {data}=await sb.auth.getSession();await bootstrap(data.session)})();
+auth.onAuthStateChanged(user=>bootstrap(user));
 </script>
 </body>
 </html>
