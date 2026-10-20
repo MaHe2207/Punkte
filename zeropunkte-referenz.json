@@ -1,0 +1,99 @@
+{
+  "hinweis": "Aus eindeutig lesbaren Nutzerscreenshots übernommene Beispiele. Keine automatische Erkennung von Markenprodukten.",
+  "kategorien": {
+    "Mais & Popcorn": [
+      "Mais (Konserve)",
+      "Maiskolben",
+      "Popcorn, ohne Fett & Zucker"
+    ],
+    "Eier": [
+      "Eigelb",
+      "Eiweiß",
+      "Entenei",
+      "Gänseei",
+      "Hühnereier",
+      "Putenei",
+      "Wachtelei"
+    ],
+    "Hülsenfrüchte": [
+      "Belugalinsen, trocken",
+      "Berglinsen (Konserve)",
+      "Berglinsen, trocken",
+      "Bohnen-Mix (Konserve), ohne Fett & Zucker",
+      "Braune Linsen, trocken",
+      "Dicke Bohnen, frisch",
+      "Edamame",
+      "Erbsen, frisch",
+      "Erbsensprossen",
+      "Gelbe Linsen, trocken",
+      "Kichererbsen, trocken",
+      "Kidneybohnen, trocken",
+      "Lupinenflocken",
+      "Mungbohnen, trocken",
+      "Rote Linsen, trocken",
+      "Schwarze Bohnen, trocken",
+      "Sojabohnen, trocken",
+      "Sojabohnenkeimlinge",
+      "Sojaflocken",
+      "Weiße Bohnen, trocken",
+      "Adzukibohnen, trocken",
+      "Lupinensamen, trocken",
+      "Wachtelbohnen, trocken"
+    ],
+    "Getreideflocken": [
+      "3-Korn Flocken, Vollkorn",
+      "4-Korn Flocken, Vollkorn",
+      "5-Korn Flocken, Vollkorn",
+      "6-Korn Flocken, Vollkorn",
+      "Amarantflocken, Vollkorn",
+      "Basis-Müsli, Vollkornflocken",
+      "Buchweizenflocken",
+      "Dinkelflocken, Vollkorn",
+      "Emmerflocken, Vollkorn",
+      "Gerstenflocken, Vollkorn",
+      "Haferflocken/Vollkornhaferflocken",
+      "Hirseflocken",
+      "Kastanienflocken",
+      "Porridge, pur, ohne Zucker, zubereitet mit Wasser",
+      "Quinoaflocken",
+      "Reisflocken, Vollkorn",
+      "Roggenflocken, Vollkorn",
+      "Weizenflocken, Vollkorn"
+    ],
+    "Geflügel": [
+      "Brathähnchen, ohne Haut, verzehrfertig",
+      "Geflügelbrustaufschnitt",
+      "Geflügelhackfleisch, bis 10 % Fett",
+      "Geflügelhackfleisch, mager (hergestellt aus Geflügelbrustfilet)",
+      "Geflügellachsschinken",
+      "Geflügelschinken, gekocht",
+      "Hähnchenbrustaufschnitt",
+      "Hähnchenbrustfilet/Hähnchenschnitzel",
+      "Hähnchenkeule/-schenkel, ohne Haut, roh",
+      "Hähnchenkeule/-schenkel, ohne Haut, verzehrfertig",
+      "Maispoulardenkeule, ohne Haut",
+      "Putenbrustaufschnitt",
+      "Putenbrustfilet",
+      "Putenkeule, ohne Haut",
+      "Putenschnitzel"
+    ],
+    "Tofu & Tempeh": [
+      "Räuchertofu",
+      "Seidentofu",
+      "Sojagranulat (Trockenprodukt)",
+      "Sojaschnetzel (Trockenprodukt)",
+      "Tempeh",
+      "Tofu"
+    ],
+    "Milchprodukte & vegane Alternativen": [
+      "Griechischer Joghurt, Natur, bis 0,2 % Fett",
+      "Hüttenkäse/Körniger Frischkäse, bis 0,5 % Fett absolut",
+      "Magermilchjoghurt",
+      "Magerquark",
+      "Mandel-Joghurt, Natur, ungesüßt",
+      "Skyr, Natur, bis 0,2 % Fett",
+      "Sojajoghurt, Natur, bis 3 g Zucker/100 g",
+      "Sojaquark/Sojaskyr, Natur, ungesüßt"
+    ]
+  }
+}
