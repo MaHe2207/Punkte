@@ -67,7 +67,7 @@
     .toast.success{background:#166534}.toast.error{background:#991b1b}
     .toast-icon{font-size:22px;font-weight:900}.toast-text{font-size:14px;font-weight:700;line-height:1.35}
 
-/* Meine Punkte v1.3.0 — cohesive mobile-first redesign */
+/* Meine Punkte v1.4.0 — cohesive mobile-first redesign */
 :root{--bg:#f5f8fb;--card:#ffffff;--text:#12213a;--muted:#68778c;--line:#e4eaf2;--accent:#0757c8;--good:#099c72;--bad:#c13f4c;--soft:#e9f4ff}
 body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:92px}
 header{background:rgba(250,252,255,.96);border-bottom:1px solid #e6edf5;padding-top:calc(13px + env(safe-area-inset-top))}
@@ -107,7 +107,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
 .weight-chart{margin-top:14px}.weight-chart svg{width:100%;height:auto;display:block;background:linear-gradient(#f9fcff,#f0f7ff);border-radius:14px}
 
 
-/* v1.3.0 – screen-first information architecture */
+/* v1.4.0 – screen-first information architecture */
 :root{--bg:#f5f8f7;--card:#fff;--text:#1e3442;--muted:#738493;--line:#e6eeed;--accent:#247e85;--good:#268b70;--soft:#e6f4ef}
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 header{background:rgba(245,248,247,.97);border-bottom:0;padding-bottom:7px}
@@ -124,14 +124,14 @@ input,select,textarea{border-color:#dfe9e7;border-radius:13px}input:focus,select
 .metric{background:#f3f8f6}.points{color:#287f86}.notice{background:#fff5e7;color:#86612f}
 .feature-panel{margin:0 0 14px;border:1px solid #e3eeea;border-radius:18px;background:#fff;overflow:hidden}.feature-panel>summary{list-style:none;cursor:pointer;padding:17px 19px;font-size:15px;font-weight:750;color:#286e71;display:flex;align-items:center;justify-content:space-between}.feature-panel>summary::-webkit-details-marker{display:none}.feature-panel>summary:after{content:'＋';font-size:20px;color:#49958b}.feature-panel[open]>summary:after{content:'−'}.feature-panel>.card{margin:0;border:0;border-top:1px solid #edf3f1;border-radius:0;box-shadow:none}
 .filter-details>summary{color:#467b7a}.editor-disclosure>summary{display:none}.editor-disclosure[open]>.card{margin:0}
-nav{background:#fff;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid #e4eeeb;box-shadow:0 -5px 22px #29594c09}
+nav{background:#fff;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #e4eeeb;box-shadow:0 -5px 22px #29594c09}
 nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{background:#e6f5ee;color:#237d72}nav .ico{font-size:22px}
 .version-card{background:linear-gradient(125deg,#e6f4ed,#eef8f7)}.version-card strong{color:#277d77}
 .weekbar>div{background:#3fa78c}.create-action{background:#287f86}
 @media(max-width:390px){main{padding:10px 11px 20px}.card{padding:15px}.today-circle{width:174px;height:174px}.today-circle>div{width:151px;height:151px}.today-circle strong{font-size:48px}.today-hero .metric b{font-size:21px}nav button{font-size:9px}}
 
   
-/* v1.3.0: Wochenübersicht und Gerichte als eigenständige Screens */
+/* v1.4.0: Wochenübersicht und Gerichte als eigenständige Screens */
 .week-chart-heading{font-weight:750;margin:18px 0 9px;color:var(--text)}
 .week-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;padding:15px 8px 9px;background:#f6faf8;border-radius:18px;min-height:180px}
 .week-bar-cell{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
@@ -154,13 +154,20 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
 .recipe-gallery .recipe-tile .actions button{font-size:11px;padding:7px 8px}
 @media(max-width:360px){.recipe-gallery{grid-template-columns:1fr}.week-chart{gap:4px}}
 
-/* v1.3.0 – focus-first product library */
+/* v1.4.0 – focus-first product library */
 .product-quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}.product-quick-actions button{padding:12px 8px;font-size:13px;border-radius:14px}
 .product-list{display:grid;gap:9px}.product-tile{display:grid;grid-template-columns:58px minmax(0,1fr) 38px 30px;align-items:center;gap:10px;border:1px solid #e7eeeb;background:#fff;border-radius:17px;padding:9px;min-width:0}.product-thumb{height:58px;width:58px;border-radius:12px;background:#e9f6ed;display:grid;place-items:center;color:#64a18a;font-size:28px;overflow:hidden}.product-thumb img{height:100%;width:100%;object-fit:cover}.product-info{min-width:0}.product-info .item-name{font-size:14px;line-height:1.3;overflow-wrap:anywhere}.product-info .muted{font-size:11px;margin-top:3px}.product-point{font-size:12px;font-weight:750;color:#237d72;margin-top:5px}.product-add{width:36px;height:36px;border-radius:50%;padding:0;font-size:23px;line-height:1;background:#2e9a7e;color:white}.product-more{position:relative;align-self:center}.product-more summary{list-style:none;cursor:pointer;font-size:22px;text-align:center;color:#728982}.product-more summary::-webkit-details-marker{display:none}.product-more>div{position:absolute;z-index:5;right:0;top:29px;min-width:130px;padding:9px;display:grid;gap:6px;background:#fff;border:1px solid #e0e9e5;border-radius:12px;box-shadow:0 8px 20px #1233}.product-more button{width:100%}@media(max-width:380px){.product-tile{grid-template-columns:46px minmax(0,1fr) 34px 24px;gap:7px}.product-thumb{width:46px;height:46px}.product-quick-actions button{font-size:11px}}
+/* v1.4.0: fünf Hauptbereiche, Einstellungen über Kopfzeile */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.settings-shortcut{background:#eaf4ef;color:#287a66;border:1px solid #d5e7dc;border-radius:13px;min-width:42px;min-height:42px;font-size:22px;padding:6px;cursor:pointer}
+.image-url-entry{display:grid;gap:8px;padding:11px;background:#f5faf7;border:1px solid #dcebe1;border-radius:13px;margin:8px 0}
+.image-url-entry label{margin:0;font-size:13px;font-weight:700}
+.image-url-entry input{width:100%;box-sizing:border-box;margin:0}
+.image-url-entry button{width:100%}
 </style>
 </head>
 <body>
-<header><h1 id="pageTitle">Heute</h1></header>
+<header><h1 id="pageTitle">Heute</h1><button id="settingsShortcut" class="settings-shortcut" type="button" onclick="openSettings()" aria-label="Einstellungen öffnen" title="Einstellungen">⚙</button></header>
 <div id="authShell" class="auth-shell hidden">
   <div class="card">
     <div class="title">Meine Punkte</div>
@@ -276,7 +283,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
     </details>
     <div id="productCard" class="card" style="display:none">
       <div class="row"><div class="grow"><div class="title" id="pName"></div><div class="muted" id="pBrand"></div></div><div class="points" id="pPoints"></div></div>
-      <div id="pImageWrap" style="margin-top:10px"></div><div class="image-actions"><button class="secondary smallbtn" onclick="findSharedImage('product')">Bild aus dem Internet</button><button class="secondary smallbtn" onclick="document.getElementById('productImageFile').click()">Eigenes Bild</button><input id="productImageFile" type="file" accept="image/*" hidden onchange="uploadSharedImage(event,'product')"></div><div class="muted" id="productImageStatus"></div>
+      <div id="pImageWrap" style="margin-top:10px"></div><div class="image-actions"><button class="secondary smallbtn" onclick="toggleImageUrl('product')">Bild-URL einfügen</button><button class="secondary smallbtn" onclick="document.getElementById('productImageFile').click()">Eigenes Bild</button><input id="productImageFile" type="file" accept="image/*" hidden onchange="uploadSharedImage(event,'product')"></div><div id="productImageUrlEntry" class="image-url-entry hidden"><label for="productImageUrl">Direkter Link zum Bild (https://)</label><input id="productImageUrl" type="url" inputmode="url" placeholder="https://beispiel.de/foto.jpg"><button type="button" onclick="applyImageUrl('product')">Bild übernehmen</button></div><div class="muted" id="productImageStatus"></div>
       <div class="grid3" id="nutriGrid" style="margin-top:10px"></div>
       <details><summary>Inhaltsstoffe</summary><p id="pIngredients" class="muted"></p></details>
       <label>Punkte-Regel für dieses Lebensmittel</label><select id="productPointMode" onchange="setCurrentPointMode()">
@@ -347,7 +354,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
   <section id="recipesView" class="view"><div class="section-intro"><span>GEMEINSAM GENIESSEN</span><h2>Meine Gerichte</h2></div><button class="full create-action" onclick="document.getElementById('recipeEditorWrap').open=true;document.getElementById('recipeEditorWrap').scrollIntoView({behavior:'smooth'})">＋ Neues Gericht erstellen</button>
     <details id="recipeEditorWrap" class="editor-disclosure"><summary>Gericht erstellen oder bearbeiten</summary><div class="card">
       <div class="title" id="recipeEditorTitle">Gericht zusammenstellen</div>
-      <div id="recipeImagePreview" class="image-preview"></div><div class="image-actions"><button type="button" class="secondary smallbtn" onclick="findSharedImage('recipe')">Bild aus dem Internet</button><button type="button" class="secondary smallbtn" onclick="document.getElementById('recipeImageFile').click()">Eigenes Bild</button><input id="recipeImageFile" type="file" accept="image/*" hidden onchange="uploadSharedImage(event,'recipe')"></div><div class="muted" id="recipeImageStatus"></div><label>Name des Gerichts</label><input id="recipeName" placeholder="z. B. Frühstücksbowl">
+      <div id="recipeImagePreview" class="image-preview"></div><div class="image-actions"><button type="button" class="secondary smallbtn" onclick="toggleImageUrl('recipe')">Bild-URL einfügen</button><button type="button" class="secondary smallbtn" onclick="document.getElementById('recipeImageFile').click()">Eigenes Bild</button><input id="recipeImageFile" type="file" accept="image/*" hidden onchange="uploadSharedImage(event,'recipe')"></div><div id="recipeImageUrlEntry" class="image-url-entry hidden"><label for="recipeImageUrl">Direkter Link zum Bild (https://)</label><input id="recipeImageUrl" type="url" inputmode="url" placeholder="https://beispiel.de/foto.jpg"><button type="button" onclick="applyImageUrl('recipe')">Bild übernehmen</button></div><div class="muted" id="recipeImageStatus"></div><label>Name des Gerichts</label><input id="recipeName" placeholder="z. B. Frühstücksbowl">
       <label>Zutat</label><select id="ingredientSelect"></select>
       <div class="row">
         <div class="grow"><label>Menge (g)</label><input id="ingredientGrams" type="number" min="1" value="100"></div>
@@ -406,7 +413,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
     <div class="card"><div class="title">Gewichtsverlauf</div><div id="weightChart" class="weight-chart"></div><details><summary>Alle Einträge</summary><div id="weightList"></div></details></div>
   </section>
 
-  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.3.0</strong></div></div>
+  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.4.0</strong></div></div>
     <div class="card">
       <div class="title">Punktebudgets</div>
       <label>Tagespunkte (jeden Tag neu)</label><input id="dailyTargetInput" type="number" min="0" step="1">
@@ -442,7 +449,6 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
   <button data-view="productsView"><span class="ico">▣</span>Lebensmittel</button>
   <button data-view="recipesView"><span class="ico">☰</span>Gerichte</button>
   <button data-view="weightView"><span class="ico">⚖</span>Gewicht</button>
-  <button data-view="settingsView"><span class="ico">⚙</span>Einstellungen</button>
 </nav>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -591,7 +597,18 @@ state.dailyTarget=Math.max(0,Math.round(settings.data?.daily_target??30));state.
 function dbToProduct(p){return{id:p.id,barcode:p.barcode||'',name:p.product_name,brand:p.brand||'',image:p.image_url||'',ingredients:p.ingredients_text||'',calories:n(p.calories),fat:n(p.fat),sat:n(p.saturated_fat),carbs:n(p.carbohydrates),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),...decodePointSource(p.source),createdAt:p.created_at||'',updatedAt:p.updated_at||''}}
 function productToDb(p){return{household_id:currentHousehold.id,barcode:p.barcode||null,product_name:p.name,brand:p.brand||null,image_url:p.image||null,ingredients_text:p.ingredients||null,calories:n(p.calories),fat:n(p.fat),saturated_fat:n(p.sat),carbohydrates:n(p.carbs),sugar:n(p.sugar),fiber:n(p.fiber),protein:n(p.protein),source:encodePointSource(p),created_by:currentUser.id,updated_at:new Date().toISOString()}}
 function recipeFromParts(r,ingredients){let total=0;for(const i of ingredients){const p=state.products.find(x=>x.id===i.productId);if(p){const c=pointsForProduct(p,i.grams);if(c.ok)total+=c.points}}const servings=Math.max(1,n(r.servings)||1);return{id:r.id,name:r.name,servings,ingredients,totalPoints:total,pointsPerServing:Math.round(total/servings),createdAt:r.created_at||'',updatedAt:r.updated_at||'',image:r.image_url||''}}
-document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(btn.dataset.view).classList.add('active');pageTitle.textContent=btn.textContent.trim();if(btn.dataset.view!=='productsView')stopScanner();renderAll()});
+function activateView(view){
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===view));
+ const titles={todayView:'Heute',weekView:'Woche',productsView:'Lebensmittel',recipesView:'Gerichte',weightView:'Gewicht',settingsView:'Einstellungen'};
+ pageTitle.textContent=titles[view]||'Meine Punkte';
+ document.getElementById('settingsShortcut').textContent=view==='settingsView'?'←':'⚙';
+ document.getElementById('settingsShortcut').setAttribute('aria-label',view==='settingsView'?'Zurück':'Einstellungen öffnen');
+ if(view!=='productsView')stopScanner();renderAll();
+}
+let previousMainView='todayView';
+function openSettings(){const current=document.querySelector('.view.active')?.id;if(current==='settingsView')activateView(previousMainView);else{previousMainView=current||'todayView';activateView('settingsView')}}
+document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>activateView(btn.dataset.view));
 function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;dailyTargetInput.value=state.dailyTarget;updateInstallButton();accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate()}
 function renderToday(){
   const ds=localDate(),day=dayBudget(ds),wk=weekBudget(mondayOf());
@@ -654,7 +671,7 @@ function filterZeroReferences(){
 }
 function selectZeroReference(){if(mZeroChoice.value)mName.value=mZeroChoice.value}
 function createManualProduct(){currentProduct={id:null,barcode:barcodeInput.value.trim()||'',name:mName.value.trim()||'Manuelles Lebensmittel',brand:'Manuell',fat:n(mFat.value),sat:n(mSat.value),carbs:n(mCarbs.value),sugar:n(mSugar.value),fiber:n(mFiber.value),protein:n(mProtein.value),ingredients:'',source:'manual',pointMode:mZeroChoice.value&&mName.value.trim()===mZeroChoice.value?'zero':'formula',fixedPoints:0};showProduct(currentProduct);productCard.scrollIntoView({behavior:'smooth',block:'start'})}
-async function saveCurrentProduct(silent=false){if(!currentProduct)return null;const calc=pointsForProduct(currentProduct);if(!calc.ok){if(!silent)alert(calc.error);return null}let q=sb.from('products');const payload=productToDb(currentProduct);let res;if(currentProduct.id)res=await q.update(payload).eq('id',currentProduct.id).select().single();else if(currentProduct.barcode)res=await q.upsert(payload,{onConflict:'household_id,barcode'}).select().single();else res=await q.insert(payload).select().single();if(res.error){if(!silent)alert(res.error.message);return null}currentProduct=dbToProduct(res.data);const i=state.products.findIndex(p=>p.id===currentProduct.id);if(i>=0)state.products[i]=currentProduct;else state.products.push(currentProduct);renderAll();if(!currentProduct.image) findSharedImage('product',true);if(!silent){scanStatus.textContent='Lebensmittel in eurer gemeinsamen Datenbank gespeichert.';showToast('Lebensmittel gespeichert ✓')}return currentProduct}
+async function saveCurrentProduct(silent=false){if(!currentProduct)return null;const calc=pointsForProduct(currentProduct);if(!calc.ok){if(!silent)alert(calc.error);return null}let q=sb.from('products');const payload=productToDb(currentProduct);let res;if(currentProduct.id)res=await q.update(payload).eq('id',currentProduct.id).select().single();else if(currentProduct.barcode)res=await q.upsert(payload,{onConflict:'household_id,barcode'}).select().single();else res=await q.insert(payload).select().single();if(res.error){if(!silent)alert(res.error.message);return null}currentProduct=dbToProduct(res.data);const i=state.products.findIndex(p=>p.id===currentProduct.id);if(i>=0)state.products[i]=currentProduct;else state.products.push(currentProduct);renderAll();if(!silent){scanStatus.textContent='Lebensmittel in eurer gemeinsamen Datenbank gespeichert.';showToast('Lebensmittel gespeichert ✓')}return currentProduct}
 async function addCurrentProductToDate(){if(!currentProduct)return;const selectedDate=addDate.value||localDate();scanStatus.textContent='Wird eingetragen …';const saved=await saveCurrentProduct(true);if(!saved){const msg='Produkt konnte nicht gespeichert werden. Bitte Nährwerte prüfen.';scanStatus.textContent=msg;showToast(msg,'error');return}const g=Math.max(1,n(addGrams.value)),calc=pointsForProduct(saved,g);if(!calc.ok){scanStatus.textContent=calc.error;showToast(calc.error,'error');return}const {data,error}=await sb.from('daily_entries').insert({user_id:currentUser.id,product_id:saved.id,entry_date:selectedDate,product_name:saved.name,amount_grams:g,points:calc.points}).select().single();if(error){const msg='Eintrag konnte nicht hinzugefügt werden: '+error.message;scanStatus.textContent=msg;showToast(msg,'error');return}state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name:saved.name,detail:`${g} g`,points:calc.points,type:'food',table:'daily_entries'});renderAll();const msg=`✓ ${saved.name} · ${g} g · ${calc.points} P für ${new Date(selectedDate+'T12:00:00').toLocaleDateString('de-DE')} eingetragen`;scanStatus.textContent=msg;showToast(msg);if(navigator.vibrate)navigator.vibrate(45)}
 async function startScanner(){scanStatus.textContent='';if(!navigator.mediaDevices?.getUserMedia){scanStatus.textContent='Kamera-Zugriff wird von diesem Browser nicht unterstützt.';return}if(!('BarcodeDetector' in window)){scanStatus.textContent='BarcodeDetector wird hier nicht unterstützt. Bitte Barcode eintippen.';return}try{const formats=await BarcodeDetector.getSupportedFormats(),wanted=['ean_13','ean_8','upc_a','upc_e','code_128'].filter(x=>formats.includes(x)),detector=new BarcodeDetector({formats:wanted.length?wanted:formats});scannerStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});const track=scannerStream.getVideoTracks()[0];try{const caps=track.getCapabilities?.()||{};if(Array.isArray(caps.focusMode)&&caps.focusMode.includes('continuous'))await track.applyConstraints({advanced:[{focusMode:'continuous'}]});}catch{}video.srcObject=scannerStream;await video.play();scanStatus.textContent='Kamera aktiv – Autofokus wird verwendet, sofern dein Gerät ihn unterstützt.';scanTimer=setInterval(async()=>{try{const codes=await detector.detect(video);if(codes.length){const raw=codes[0].rawValue;stopScanner();lookupBarcode(raw)}}catch{}},350)}catch(e){scanStatus.textContent='Kamera konnte nicht gestartet werden. Prüfe Berechtigung, HTTPS und Browser.'}}
 function stopScanner(){if(scanTimer){clearInterval(scanTimer);scanTimer=null}if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null}if(video)video.srcObject=null}
@@ -690,7 +707,7 @@ function addIngredient(){const p=state.products.find(x=>x.id===ingredientSelect.
 function renderRecipeBuilder(){let total=0;recipeIngredients.innerHTML=recipeDraft.length?recipeDraft.map(i=>{const p=state.products.find(x=>x.id===i.productId),c=p?pointsForProduct(p,i.grams):{ok:false},pts=c.ok?c.points:0;total+=pts;return `<div class="item row"><div class="grow"><b>${esc(i.name)}</b><div class="muted">${i.grams} g · ${pts} P</div></div><button class="danger smallbtn" onclick="removeIngredient('${i.id}')">×</button></div>`}).join(''):'<p class="muted">Noch keine Zutaten.</p>';const servings=Math.max(1,Math.round(n(recipeServings.value)||1));recipePoints.textContent=total;recipePerServing.textContent=`${Math.round(total/servings)} Punkte pro Portion`}
 function removeIngredient(id){recipeDraft=recipeDraft.filter(x=>x.id!==id);renderRecipeBuilder()}
 function currentRecipeData(){let total=0;for(const i of recipeDraft){const p=state.products.find(x=>x.id===i.productId);if(p){const c=pointsForProduct(p,i.grams);if(c.ok)total+=c.points}}const servings=Math.max(1,Math.round(n(recipeServings.value)||1));return{name:recipeName.value.trim()||'Mein Gericht',ingredients:[...recipeDraft],servings,totalPoints:total,pointsPerServing:Math.round(total/servings)}}
-async function saveRecipe(){if(!recipeDraft.length){showToast('Bitte mindestens eine Zutat hinzufügen.','error');return}const r=currentRecipeData();if(editingRecipeId){const upd=await sb.from('recipes').update({name:r.name,servings:r.servings,image_url:recipeImageValue||null,updated_at:new Date().toISOString()}).eq('id',editingRecipeId).select().single();if(upd.error){showToast('Gericht konnte nicht aktualisiert werden: '+upd.error.message,'error');return}const del=await sb.from('recipe_items').delete().eq('recipe_id',editingRecipeId);if(del.error){showToast('Alte Zutaten konnten nicht ersetzt werden: '+del.error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:editingRecipeId,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}const name=r.name;cancelRecipeEdit(false);await loadCloudData();showToast(`${name} aktualisiert ✓`);return}const {data,error}=await sb.from('recipes').insert({household_id:currentHousehold.id,name:r.name,servings:r.servings,image_url:recipeImageValue||null,created_by:currentUser.id}).select().single();if(error){showToast('Gericht konnte nicht gespeichert werden: '+error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:data.id,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}const needsImage=!recipeImageValue;recipeDraft=[];recipeImageValue='';updateRecipeImagePreview();recipeName.value='';recipeServings.value=1;await loadCloudData();if(needsImage)autoRecipeImage(data.id,r.name);showToast(`${r.name} gespeichert ✓`)}
+async function saveRecipe(){if(!recipeDraft.length){showToast('Bitte mindestens eine Zutat hinzufügen.','error');return}const r=currentRecipeData();if(editingRecipeId){const upd=await sb.from('recipes').update({name:r.name,servings:r.servings,image_url:recipeImageValue||null,updated_at:new Date().toISOString()}).eq('id',editingRecipeId).select().single();if(upd.error){showToast('Gericht konnte nicht aktualisiert werden: '+upd.error.message,'error');return}const del=await sb.from('recipe_items').delete().eq('recipe_id',editingRecipeId);if(del.error){showToast('Alte Zutaten konnten nicht ersetzt werden: '+del.error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:editingRecipeId,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}const name=r.name;cancelRecipeEdit(false);await loadCloudData();showToast(`${name} aktualisiert ✓`);return}const {data,error}=await sb.from('recipes').insert({household_id:currentHousehold.id,name:r.name,servings:r.servings,image_url:recipeImageValue||null,created_by:currentUser.id}).select().single();if(error){showToast('Gericht konnte nicht gespeichert werden: '+error.message,'error');return}const rows=r.ingredients.map(i=>({recipe_id:data.id,product_id:i.productId,amount_grams:i.grams}));const ins=await sb.from('recipe_items').insert(rows);if(ins.error){showToast('Zutaten konnten nicht gespeichert werden: '+ins.error.message,'error');return}recipeDraft=[];recipeImageValue='';updateRecipeImagePreview();recipeName.value='';recipeServings.value=1;await loadCloudData();showToast(`${r.name} gespeichert ✓`)}
 function editRecipe(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;editingRecipeId=id;recipeImageValue=r.image||'';updateRecipeImagePreview();document.getElementById('recipeEditorWrap').open=true;recipeName.value=r.name;recipeServings.value=r.servings;recipeDraft=r.ingredients.map(i=>({id:crypto.randomUUID(),productId:i.productId,name:state.products.find(p=>p.id===i.productId)?.name||i.name||'Zutat',grams:i.grams}));recipeEditorTitle.textContent='Gericht bearbeiten';saveRecipeBtn.textContent='Änderungen speichern';cancelRecipeEditBtn.style.display='block';renderRecipeBuilder();document.getElementById('recipeEditorWrap').scrollIntoView({behavior:'smooth',block:'start'})}
 function cancelRecipeEdit(render=true){recipeImageValue='';updateRecipeImagePreview();editingRecipeId=null;recipeDraft=[];recipeName.value='';recipeServings.value=1;recipeEditorTitle.textContent='Gericht zusammenstellen';saveRecipeBtn.textContent='Gericht speichern';cancelRecipeEditBtn.style.display='none';if(render)renderAll()}
 async function deleteRecipe(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;if(!confirm(`„${r.name}“ wirklich löschen?`))return;const {error}=await sb.from('recipes').delete().eq('id',id);if(error){showToast('Gericht konnte nicht gelöscht werden: '+error.message,'error');return}if(editingRecipeId===id)cancelRecipeEdit(false);state.recipes=state.recipes.filter(x=>x.id!==id);renderAll();showToast(`${r.name} gelöscht ✓`)}
@@ -739,15 +756,29 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&currentUs
 window.addEventListener('focus',()=>{if(currentUser&&currentHousehold)renderAll()});
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
-// Images are shared via existing household product/recipe documents.
-// Wikimedia Commons search may fail due to connectivity or API policies; uploading remains available.
+// Images are only selected by the user (HTTPS URL or local upload).
+// Stored in shared household product and recipe documents.
 let recipeImageValue='';
-async function autoRecipeImage(id,name){try{const result=await commonsImage(name);if(!result)return;const res=await sb.from('recipes').update({image_url:result.url}).eq('id',id).select().single();if(!res.error){const r=state.recipes.find(x=>x.id===id);if(r)r.image=result.url;renderRecipeLibrary()}}catch(e){console.info('Optionales Rezeptbild nicht verfügbar',e)}}
 function updateRecipeImagePreview(){const el=document.getElementById('recipeImagePreview');if(el)el.innerHTML=recipeImageValue?`<img src="${esc(recipeImageValue)}" alt="Gericht" class="hero-food-image">`:''}
-async function commonsImage(name){
- const params=new URLSearchParams({action:'query',generator:'search',gsrsearch:'filetype:bitmap '+name,gsrnamespace:'6',gsrlimit:'8',prop:'imageinfo',iiprop:'url|extmetadata',iiurlwidth:'600',format:'json',origin:'*'});
- const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),8500);
- try{const res=await fetch('https://commons.wikimedia.org/w/api.php?'+params,{signal:controller.signal});if(!res.ok)throw Error('Bildsuche nicht erreichbar');const data=await res.json();const pages=Object.values(data.query?.pages||{});const match=pages.find(p=>{const ii=p.imageinfo?.[0];return ii?.thumburl&&/\.(jpg|jpeg|png|webp)(\?|$)/i.test(ii.thumburl)});if(!match)return null;const ii=match.imageinfo[0];return {url:ii.thumburl,source:ii.descriptionurl||'',license:(ii.extmetadata?.LicenseShortName?.value||''),credit:(ii.extmetadata?.Artist?.value||'').replace(/<[^>]*>/g,'').slice(0,120)};}finally{clearTimeout(timer)}
+function toggleImageUrl(type){
+ const panel=document.getElementById(type==='product'?'productImageUrlEntry':'recipeImageUrlEntry');
+ panel.classList.toggle('hidden');if(!panel.classList.contains('hidden'))panel.querySelector('input').focus();
+}
+async function applyImageUrl(type){
+ const input=document.getElementById(type==='product'?'productImageUrl':'recipeImageUrl');
+ const value=input.value.trim();let url;
+ try{url=new URL(value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Bitte eine gültige HTTPS-Bildadresse eingeben.');}
+ catch(e){showToast('Bitte eine gültige HTTPS-Bildadresse eingeben.','error');return}
+ const status=document.getElementById(type==='product'?'productImageStatus':'recipeImageStatus');
+ status.textContent='Bild wird überprüft …';
+ const img=new Image();
+ try{
+   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Zeitüberschreitung')),10000);img.onload=()=>{clearTimeout(timer);resolve()};img.onerror=()=>{clearTimeout(timer);reject(Error('Bild konnte nicht geladen werden'))};img.src=url.href});
+   await saveImageToShared(type,url.href);
+   status.textContent='Bild-URL gespeichert und für den Haushalt freigegeben.';
+   document.getElementById(type==='product'?'productImageUrlEntry':'recipeImageUrlEntry').classList.add('hidden');
+   showToast('Bild für den Haushalt gespeichert');
+ }catch(e){status.textContent='Bild nicht erreichbar. Bitte einen direkten Bildlink verwenden.';showToast(e.message,'error')}
 }
 async function saveImageToShared(type,url){
  if(!url)return;const id=type==='product'?currentProduct?.id:editingRecipeId;
@@ -760,13 +791,6 @@ async function saveImageToShared(type,url){
    recipeImageValue=url;updateRecipeImagePreview();
    if(id){const res=await sb.from('recipes').update({image_url:url}).eq('id',id).select().single();if(res.error)throw Error(res.error.message);const r=state.recipes.find(x=>x.id===id);if(r)r.image=url;renderRecipeLibrary()}
  }
-}
-async function findSharedImage(type,quiet=false){
- const name=type==='product'?currentProduct?.name:recipeName.value.trim();if(!name){if(!quiet)showToast('Bitte zuerst einen Namen eingeben.','error');return}
- const status=document.getElementById(type==='product'?'productImageStatus':'recipeImageStatus');if(status&&!quiet)status.textContent='Suche frei verfügbare Bilder …';
- try{const result=await commonsImage(name);if(!result){if(!quiet)showToast('Kein passendes Bild gefunden. Eigenes Bild verwenden.','error');return}if(!quiet&&!confirm('Gefundenes Bild aus Wikimedia Commons übernehmen? Bitte prüfen, ob das Motiv passt.'))return;
- await saveImageToShared(type,result.url);if(status)status.textContent='Bild: Wikimedia Commons · '+(result.license||'Lizenz prüfen')+(result.source?' · Quelle: '+result.source:'');if(!quiet)showToast('Bild für den Haushalt gespeichert');
- }catch(e){if(!quiet)showToast('Bildsuche fehlgeschlagen: '+e.message,'error');if(status&&!quiet)status.textContent='Du kannst stattdessen ein eigenes Bild hochladen.'}
 }
 async function uploadSharedImage(event,type){const file=event.target.files?.[0];if(!file)return;
  if(file.size>12*1024*1024){showToast('Bild zu groß (max. 12 MB).','error');return}
