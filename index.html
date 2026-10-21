@@ -67,7 +67,7 @@
     .toast.success{background:#166534}.toast.error{background:#991b1b}
     .toast-icon{font-size:22px;font-weight:900}.toast-text{font-size:14px;font-weight:700;line-height:1.35}
 
-/* Meine Punkte v1.4.0 — cohesive mobile-first redesign */
+/* Meine Punkte v1.5.0 — cohesive mobile-first redesign */
 :root{--bg:#f5f8fb;--card:#ffffff;--text:#12213a;--muted:#68778c;--line:#e4eaf2;--accent:#0757c8;--good:#099c72;--bad:#c13f4c;--soft:#e9f4ff}
 body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:92px}
 header{background:rgba(250,252,255,.96);border-bottom:1px solid #e6edf5;padding-top:calc(13px + env(safe-area-inset-top))}
@@ -107,7 +107,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
 .weight-chart{margin-top:14px}.weight-chart svg{width:100%;height:auto;display:block;background:linear-gradient(#f9fcff,#f0f7ff);border-radius:14px}
 
 
-/* v1.4.0 – screen-first information architecture */
+/* v1.5.0 – screen-first information architecture */
 :root{--bg:#f5f8f7;--card:#fff;--text:#1e3442;--muted:#738493;--line:#e6eeed;--accent:#247e85;--good:#268b70;--soft:#e6f4ef}
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 header{background:rgba(245,248,247,.97);border-bottom:0;padding-bottom:7px}
@@ -131,7 +131,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
 @media(max-width:390px){main{padding:10px 11px 20px}.card{padding:15px}.today-circle{width:174px;height:174px}.today-circle>div{width:151px;height:151px}.today-circle strong{font-size:48px}.today-hero .metric b{font-size:21px}nav button{font-size:9px}}
 
   
-/* v1.4.0: Wochenübersicht und Gerichte als eigenständige Screens */
+/* v1.5.0: Wochenübersicht und Gerichte als eigenständige Screens */
 .week-chart-heading{font-weight:750;margin:18px 0 9px;color:var(--text)}
 .week-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;padding:15px 8px 9px;background:#f6faf8;border-radius:18px;min-height:180px}
 .week-bar-cell{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
@@ -154,10 +154,10 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
 .recipe-gallery .recipe-tile .actions button{font-size:11px;padding:7px 8px}
 @media(max-width:360px){.recipe-gallery{grid-template-columns:1fr}.week-chart{gap:4px}}
 
-/* v1.4.0 – focus-first product library */
+/* v1.5.0 – focus-first product library */
 .product-quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}.product-quick-actions button{padding:12px 8px;font-size:13px;border-radius:14px}
 .product-list{display:grid;gap:9px}.product-tile{display:grid;grid-template-columns:58px minmax(0,1fr) 38px 30px;align-items:center;gap:10px;border:1px solid #e7eeeb;background:#fff;border-radius:17px;padding:9px;min-width:0}.product-thumb{height:58px;width:58px;border-radius:12px;background:#e9f6ed;display:grid;place-items:center;color:#64a18a;font-size:28px;overflow:hidden}.product-thumb img{height:100%;width:100%;object-fit:cover}.product-info{min-width:0}.product-info .item-name{font-size:14px;line-height:1.3;overflow-wrap:anywhere}.product-info .muted{font-size:11px;margin-top:3px}.product-point{font-size:12px;font-weight:750;color:#237d72;margin-top:5px}.product-add{width:36px;height:36px;border-radius:50%;padding:0;font-size:23px;line-height:1;background:#2e9a7e;color:white}.product-more{position:relative;align-self:center}.product-more summary{list-style:none;cursor:pointer;font-size:22px;text-align:center;color:#728982}.product-more summary::-webkit-details-marker{display:none}.product-more>div{position:absolute;z-index:5;right:0;top:29px;min-width:130px;padding:9px;display:grid;gap:6px;background:#fff;border:1px solid #e0e9e5;border-radius:12px;box-shadow:0 8px 20px #1233}.product-more button{width:100%}@media(max-width:380px){.product-tile{grid-template-columns:46px minmax(0,1fr) 34px 24px;gap:7px}.product-thumb{width:46px;height:46px}.product-quick-actions button{font-size:11px}}
-/* v1.4.0: fünf Hauptbereiche, Einstellungen über Kopfzeile */
+/* v1.5.0: fünf Hauptbereiche, Einstellungen über Kopfzeile */
 header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .settings-shortcut{background:#eaf4ef;color:#287a66;border:1px solid #d5e7dc;border-radius:13px;min-width:42px;min-height:42px;font-size:22px;padding:6px;cursor:pointer}
 .image-url-entry{display:grid;gap:8px;padding:11px;background:#f5faf7;border:1px solid #dcebe1;border-radius:13px;margin:8px 0}
@@ -208,9 +208,11 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
     <details class="action-disclosure"><summary>＋ Sport hinzufügen</summary><div class="card">
       <div class="title">Sport hinzufügen</div>
       <div class="grid2">
-        <div><label>Aktivität</label><input id="sportName" placeholder="z. B. Laufen"></div>
-        <div><label>Minuspunkte</label><input id="sportPoints" type="number" min="0" step="1" value="3"></div>
+        <div><label for="sportType">Sportart</label><select id="sportType" onchange="updateSportPreview()"><option value="walk">Gehen / Spazieren</option><option value="ebike">E-Bike fahren</option><option value="jog">Joggen</option><option value="badminton">Badminton</option></select></div>
+        <div><label for="sportMinutes">Dauer (Minuten)</label><input id="sportMinutes" type="number" min="1" max="1440" step="1" value="30" oninput="updateSportPreview()"></div>
       </div>
+      <div id="sportIntensityWrap" style="display:none"><label for="sportIntensity">Intensität</label><select id="sportIntensity" onchange="updateSportPreview()"><option value="low">Niedrig</option><option value="medium" selected>Mittel</option><option value="high">Hoch</option></select></div>
+      <div class="notice" id="sportPreview" aria-live="polite">Voraussichtlich 2 Aktivitätspunkte</div>
       <label>Datum</label><input id="sportDate" type="date">
       <button class="good full" style="margin-top:12px" onclick="addSport()">Sport eintragen</button>
     </div></details>
@@ -264,6 +266,10 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
         <option value="formula">RL4.2 berechnen</option><option value="zero">Bestätigtes 0-Punkte-Lebensmittel</option><option value="fixed">Manueller Wert pro 100 g</option>
       </select>
       <div id="peFixedPointsWrap" style="display:none"><label>Manuelle Punkte pro 100 g</label><input id="peFixedPoints" type="number" min="0" step="1" value="0"></div>
+      <label>Lebensmittelbild</label><div id="peImagePreview" class="image-preview"></div>
+      <div class="image-actions"><button type="button" class="secondary smallbtn" onclick="document.getElementById('peImageUrlWrap').classList.toggle('hidden')">Bild-URL einfügen</button><button type="button" class="secondary smallbtn" onclick="document.getElementById('peImageFile').click()">Eigenes Bild wählen</button><input id="peImageFile" type="file" accept="image/*" hidden onchange="setEditedProductImageFile(event)"></div>
+      <div id="peImageUrlWrap" class="image-url-entry hidden"><label for="peImageUrl">Direkte HTTPS-Bildadresse</label><input id="peImageUrl" type="url" placeholder="https://beispiel.de/foto.jpg"><button type="button" onclick="setEditedProductImageUrl()">Bild übernehmen</button></div>
+      <button type="button" class="secondary smallbtn" onclick="editedProductImage='';updateEditedProductImagePreview()">Bild entfernen</button>
       <label>Inhaltsstoffe</label><textarea id="peIngredients" rows="4" style="width:100%;box-sizing:border-box"></textarea>
       <button class="full" style="margin-top:12px" onclick="saveProductEdit()">Änderungen speichern</button>
     </div>
@@ -413,7 +419,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
     <div class="card"><div class="title">Gewichtsverlauf</div><div id="weightChart" class="weight-chart"></div><details><summary>Alle Einträge</summary><div id="weightList"></div></details></div>
   </section>
 
-  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.4.0</strong></div></div>
+  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.5.0</strong></div></div>
     <div class="card">
       <div class="title">Punktebudgets</div>
       <label>Tagespunkte (jeden Tag neu)</label><input id="dailyTargetInput" type="number" min="0" step="1">
@@ -609,7 +615,7 @@ function activateView(view){
 let previousMainView='todayView';
 function openSettings(){const current=document.querySelector('.view.active')?.id;if(current==='settingsView')activateView(previousMainView);else{previousMainView=current||'todayView';activateView('settingsView')}}
 document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>activateView(btn.dataset.view));
-function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;dailyTargetInput.value=state.dailyTarget;updateInstallButton();accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate()}
+function renderAll(){renderToday();renderWeek();renderProductLibrary();renderRecipeLibrary();renderRecipeBuilder();renderWeight();targetInput.value=state.target;dailyTargetInput.value=state.dailyTarget;updateInstallButton();accountInfo.textContent=currentUser?currentUser.email:'–';householdInfo.textContent=currentHousehold?`Gemeinsamer Haushalt: ${currentHousehold.name}`:'–';if(addDate&&!addDate.value)addDate.value=localDate();if(recipeEntryDate&&!recipeEntryDate.value)recipeEntryDate.value=localDate();if(sportDate&&!sportDate.value)sportDate.value=localDate();if(weightDate&&!weightDate.value)weightDate.value=localDate();if(recipeListDate&&!recipeListDate.value)recipeListDate.value=localDate();updateSportPreview()}
 function renderToday(){
   const ds=localDate(),day=dayBudget(ds),wk=weekBudget(mondayOf());
   todayActual.textContent=day.dailyLeft;circlePoints.textContent=day.dailyLeft;todayCircle.style.setProperty('--progress',Math.max(0,Math.min(100,100*day.dailyLeft/Math.max(1,state.dailyTarget)))+'%');todayWeekActual.textContent=day.used;todayRemaining.textContent=wk.remaining;
@@ -693,9 +699,17 @@ function renderProductLibrary(){
 }
 function openProductTool(id){const el=document.getElementById(id);if(!el)return;el.open=true;el.scrollIntoView({behavior:"smooth",block:"start"})}
 function useProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;currentProduct={...p};showProduct(currentProduct);productCard.scrollIntoView({behavior:'smooth',block:'start'});showToast(`${p.name} zum Eintragen geöffnet ✓`)}
-function editProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;editingProductId=id;peName.value=p.name||'';peBrand.value=p.brand||'';peBarcode.value=p.barcode||'';peFat.value=p.fat;peSat.value=p.sat;peCarbs.value=p.carbs;peSugar.value=p.sugar;peFiber.value=p.fiber;peProtein.value=p.protein;peIngredients.value=p.ingredients||'';pePointMode.value=p.pointMode||'formula';peFixedPoints.value=n(p.fixedPoints);peFixedPointsWrap.style.display=pePointMode.value==='fixed'?'block':'none';productEditHint.textContent=p.barcode?`Barcode ${p.barcode}`:'Ohne Barcode';productEditCard.style.display='block';productEditCard.scrollIntoView({behavior:'smooth',block:'start'})}
+let editedProductImage="";
+function editProduct(id){const p=state.products.find(x=>x.id===id);if(!p)return;editingProductId=id;editedProductImage=p.image||'';updateEditedProductImagePreview();peImageUrlWrap.classList.add('hidden');peImageUrl.value='';peName.value=p.name||'';peBrand.value=p.brand||'';peBarcode.value=p.barcode||'';peFat.value=p.fat;peSat.value=p.sat;peCarbs.value=p.carbs;peSugar.value=p.sugar;peFiber.value=p.fiber;peProtein.value=p.protein;peIngredients.value=p.ingredients||'';pePointMode.value=p.pointMode||'formula';peFixedPoints.value=n(p.fixedPoints);peFixedPointsWrap.style.display=pePointMode.value==='fixed'?'block':'none';productEditHint.textContent=p.barcode?`Barcode ${p.barcode}`:'Ohne Barcode';productEditCard.style.display='block';productEditCard.scrollIntoView({behavior:'smooth',block:'start'})}
+
+function updateEditedProductImagePreview(){const el=document.getElementById('peImagePreview');if(el)el.innerHTML=editedProductImage?`<img class="hero-food-image" src="${esc(editedProductImage)}" alt="Lebensmittelbild" onerror="this.style.display='none'">`:'<span class="muted">Kein Bild ausgewählt</span>'}
+async function setEditedProductImageUrl(){const value=peImageUrl.value.trim();let url;try{url=new URL(value);if(url.protocol!=='https:'||url.username||url.password)throw Error()}catch{showToast('Bitte eine gültige HTTPS-Bildadresse eingeben.','error');return}const img=new Image();try{await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Zeitüberschreitung')),10000);img.onload=()=>{clearTimeout(timeout);resolve()};img.onerror=()=>{clearTimeout(timeout);reject(Error('Bild nicht erreichbar'))};img.src=url.href});editedProductImage=url.href;updateEditedProductImagePreview();peImageUrlWrap.classList.add('hidden');showToast('Bild ausgewählt – zum Speichern Änderungen speichern.')}catch(e){showToast('Bild konnte nicht geladen werden.','error')}}
+async function setEditedProductImageFile(event){const file=event.target.files?.[0];if(!file)return;try{if(file.size>12*1024*1024)throw Error('Bild zu groß (max. 12 MB)');const bitmap=await createImageBitmap(file),scale=Math.min(1,640/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();const data=canvas.toDataURL('image/jpeg',.68);if(data.length>650000)throw Error('Bild zu groß nach Verkleinerung');editedProductImage=data;updateEditedProductImagePreview();showToast('Bild ausgewählt – zum Speichern Änderungen speichern.')}catch(e){showToast(e.message,'error')}finally{event.target.value=''}}
+// Only one product action menu may be open; close it when tapping elsewhere.
+document.addEventListener('click',event=>{document.querySelectorAll('details.product-more[open]').forEach(menu=>{if(!menu.contains(event.target))menu.open=false})});
+
 function cancelProductEdit(){editingProductId=null;productEditCard.style.display='none'}
-async function saveProductEdit(){const old=state.products.find(x=>x.id===editingProductId);if(!old)return;const edited={...old,name:peName.value.trim()||old.name,brand:peBrand.value.trim(),barcode:peBarcode.value.trim(),fat:n(peFat.value),sat:n(peSat.value),carbs:n(peCarbs.value),sugar:n(peSugar.value),fiber:n(peFiber.value),protein:n(peProtein.value),ingredients:peIngredients.value.trim(),pointMode:pePointMode.value,fixedPoints:Math.max(0,Math.round(n(peFixedPoints.value)))};const calc=pointsForProduct(edited);if(!calc.ok){showToast(calc.error,'error');return}const {data,error}=await sb.from('products').update(productToDb(edited)).eq('id',editingProductId).select().single();if(error){showToast('Produkt konnte nicht gespeichert werden: '+error.message,'error');return}const saved=dbToProduct(data),i=state.products.findIndex(x=>x.id===saved.id);if(i>=0)state.products[i]=saved;if(currentProduct?.id===saved.id){currentProduct=saved;showProduct(saved)}cancelProductEdit();renderAll();showToast(`${saved.name} aktualisiert ✓`)}
+async function saveProductEdit(){const old=state.products.find(x=>x.id===editingProductId);if(!old)return;const edited={...old,name:peName.value.trim()||old.name,brand:peBrand.value.trim(),barcode:peBarcode.value.trim(),fat:n(peFat.value),sat:n(peSat.value),carbs:n(peCarbs.value),sugar:n(peSugar.value),fiber:n(peFiber.value),protein:n(peProtein.value),ingredients:peIngredients.value.trim(),image:editedProductImage,pointMode:pePointMode.value,fixedPoints:Math.max(0,Math.round(n(peFixedPoints.value)))};const calc=pointsForProduct(edited);if(!calc.ok){showToast(calc.error,'error');return}const {data,error}=await sb.from('products').update(productToDb(edited)).eq('id',editingProductId).select().single();if(error){showToast('Produkt konnte nicht gespeichert werden: '+error.message,'error');return}const saved=dbToProduct(data),i=state.products.findIndex(x=>x.id===saved.id);if(i>=0)state.products[i]=saved;if(currentProduct?.id===saved.id){currentProduct=saved;showProduct(saved)}cancelProductEdit();renderAll();showToast(`${saved.name} aktualisiert ✓`)}
 function renderRecipeLibrary(){
   if(!window.recipeLibrary)return;
   const q=(recipeSearch?.value||'').trim().toLowerCase(),filter=recipePointsFilter?.value||'all',sort=recipeSort?.value||'name_asc';
@@ -714,14 +728,34 @@ async function deleteRecipe(id){const r=state.recipes.find(x=>x.id===id);if(!r)r
 async function addRecipeToDate(){if(!recipeDraft.length)return alert('Bitte mindestens eine Zutat hinzufügen.');const r=currentRecipeData();await insertRecipeEntry(r.name,r.pointsPerServing,recipeEntryDate.value||localDate())}
 async function addSavedRecipeToDate(id,dateOverride){const r=state.recipes.find(x=>x.id===id);if(r)await insertRecipeEntry(r.name,r.pointsPerServing,dateOverride||recipeEntryDate.value||localDate())}
 async function insertRecipeEntry(name,points,date=localDate()){const {data,error}=await sb.from('daily_entries').insert({user_id:currentUser.id,entry_date:date,product_name:name,amount_grams:1,points}).select().single();if(error)return alert(error.message);state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name,detail:'1 Portion',points,type:'recipe',table:'daily_entries'});renderAll();showToast(`✓ ${name} · 1 Portion · ${points} P eingetragen`);if(navigator.vibrate)navigator.vibrate(45)}
+const SPORT_NAMES={walk:'Gehen / Spazieren',ebike:'E-Bike fahren',jog:'Joggen',badminton:'Badminton'};
+function sportPointsFor(type,minutes,intensity){
+ if(!Number.isInteger(minutes)||minutes<1||minutes>1440)return null;
+ if(type==='walk'||type==='ebike'){
+   const thresholds=type==='walk'?[11,30,50,69,89]:[10,30,50,69,89];
+   // Known WW thresholds; extrapolation beyond the tested 89-minute range.
+   if(minutes<=89)return thresholds.filter(t=>minutes>=t).length;
+   return 5+Math.floor((minutes-89)/20);
+ }
+ if(type==='jog')return Math.round(minutes*({low:.115,medium:.155,high:.185}[intensity]||.155));
+ if(type==='badminton')return Math.round(minutes*.08);
+ return null;
+}
+function updateSportPreview(){
+ const type=sportType.value,minutes=Number(sportMinutes.value),intensity=sportIntensity.value;
+ sportIntensityWrap.style.display=type==='jog'?'block':'none';
+ const points=sportPointsFor(type,minutes,intensity);
+ sportPreview.textContent=points===null?'Bitte eine gültige Dauer zwischen 1 und 1440 Minuten eingeben.':`${points} Aktivitätspunkte · ${minutes} Minuten${type==='jog'?' · '+({low:'niedrige',medium:'mittlere',high:'hohe'}[intensity])+' Intensität':''}`;
+}
 async function addSport(){
-  const activity=sportName.value.trim()||'Sport',minus=Math.max(0,n(sportPoints.value));
-  if(minus<=0){showToast('Bitte Minuspunkte größer als 0 eingeben.','error');return}
-  const {data,error}=await sb.from('sport_entries').insert({user_id:currentUser.id,entry_date:sportDate.value||localDate(),activity,minus_points:minus}).select().single();
-  if(error){showToast('Sport konnte nicht hinzugefügt werden: '+error.message,'error');return}
-  state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name:activity,detail:'Sport',points:-minus,type:'sport',table:'sport_entries'});
-  renderAll(); sportName.value='';
-  showToast(`✓ ${activity} · −${minus} P eingetragen`); if(navigator.vibrate)navigator.vibrate(45);
+ const type=sportType.value,minutes=Number(sportMinutes.value),intensity=sportIntensity.value,minus=sportPointsFor(type,minutes,intensity);
+ if(minus===null){showToast('Bitte eine gültige Dauer eingeben.','error');return}
+ if(minus===0){showToast('Für diese Dauer ergeben sich 0 Aktivitätspunkte.','error');return}
+ const activity=SPORT_NAMES[type]+(type==='jog'?' ('+({low:'niedrig',medium:'mittel',high:'hoch'}[intensity])+')':'');
+ const {data,error}=await sb.from('sport_entries').insert({user_id:currentUser.id,entry_date:sportDate.value||localDate(),activity,minutes,minus_points:minus}).select().single();
+ if(error){showToast('Sport konnte nicht hinzugefügt werden: '+error.message,'error');return}
+ state.entries.push({id:data.id,date:data.entry_date,ts:Date.now(),name:activity,detail:`${minutes} Min · Sport`,points:-minus,type:'sport',table:'sport_entries'});
+ renderAll();showToast(`✓ ${activity} · ${minutes} Min · −${minus} P eingetragen`);if(navigator.vibrate)navigator.vibrate(45);
 }
 
 async function removeEntry(id,table){
@@ -740,7 +774,17 @@ async function deleteProduct(id){
 function renderWeight(){
   const items=[...(state.weights||[])].sort((a,b)=>b.date.localeCompare(a.date));
   if(items.length){latestWeight.textContent=`${round1(items[0].kg)} kg`;latestWeightDate.textContent=new Date(items[0].date+'T12:00:00').toLocaleDateString('de-DE')}else{latestWeight.textContent='–';latestWeightDate.textContent='Noch kein Gewicht eingetragen'}
-  const chart=document.getElementById('weightChart');if(chart){const ordered=[...items].reverse().slice(-16);if(ordered.length>1){const vals=ordered.map(w=>w.kg),min=Math.min(...vals)-.8,max=Math.max(...vals)+.8,pts=vals.map((v,i)=>`${12+i*276/(vals.length-1)},${112-(v-min)/(max-min)*96}`).join(' ');chart.innerHTML=`<svg viewBox="0 0 300 128" role="img" aria-label="Gewichtsverlauf"><line x1="10" y1="112" x2="290" y2="112" stroke="#dce8f4"/><polyline points="${pts}" fill="none" stroke="#0757c8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>${pts.split(' ').map(pt=>{const [x,y]=pt.split(',');return `<circle cx="${x}" cy="${y}" r="3.4" fill="#0757c8"/>`}).join('')}</svg>`}else chart.innerHTML='<p class="muted">Nach zwei Einträgen erscheint dein Gewichtsverlauf.</p>'}
+  const chart=document.getElementById('weightChart');if(chart){const ordered=[...items].reverse().slice(-16);if(ordered.length>1){
+ const vals=ordered.map(w=>w.kg),rawMin=Math.min(...vals),rawMax=Math.max(...vals),min=Math.floor((rawMin-0.5)*2)/2,max=Math.ceil((rawMax+0.5)*2)/2;
+ const left=49,right=292,top=14,bottom=135,axisHeight=bottom-top;
+ const x=i=>left+i*(right-left)/(ordered.length-1),y=v=>bottom-(v-min)/(max-min)*axisHeight;
+ const ticks=Array.from({length:5},(_,i)=>min+(max-min)*i/4);
+ const grid=ticks.map(t=>`<line x1="${left}" y1="${y(t)}" x2="${right}" y2="${y(t)}" stroke="#dce8f4"/><text x="${left-7}" y="${y(t)+3}" font-size="10" text-anchor="end" fill="#52657a">${t.toFixed(1)}</text>`).join('');
+ const indices=[...new Set([0,Math.floor((ordered.length-1)/2),ordered.length-1])];
+ const dates=indices.map(i=>`<text x="${x(i)}" y="151" font-size="10" text-anchor="${i===0?'start':i===ordered.length-1?'end':'middle'}" fill="#52657a">${ordered[i].date.slice(8,10)}.${ordered[i].date.slice(5,7)}.</text>`).join('');
+ const pts=vals.map((v,i)=>`${x(i)},${y(v)}`).join(' ');
+ chart.innerHTML=`<svg viewBox="0 0 310 179" style="width:100%;height:auto" role="img" aria-label="Gewichtsverlauf: Datum auf der waagerechten Achse, Gewicht in Kilogramm auf der senkrechten Achse">${grid}<line x1="${left}" y1="${top}" x2="${left}" y2="${bottom}" stroke="#8297ad"/><line x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}" stroke="#8297ad"/><text x="9" y="10" font-size="10" fill="#52657a">kg</text>${dates}<text x="${right}" y="170" font-size="10" text-anchor="end" fill="#52657a">Datum</text><polyline points="${pts}" fill="none" stroke="#0757c8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>${vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#0757c8"><title>${ordered[i].date.split('-').reverse().join('.')} – ${v.toFixed(1)} kg</title></circle>`).join('')}</svg>`;
+ }else chart.innerHTML='<p class="muted">Nach zwei Einträgen erscheint dein Gewichtsverlauf.</p>'}
   weightList.innerHTML=items.length?items.map(w=>`<div class="item row"><div class="grow"><div class="item-name">${round1(w.kg)} kg</div><div class="muted">${new Date(w.date+'T12:00:00').toLocaleDateString('de-DE')}</div></div><button class="danger smallbtn" onclick="deleteWeight('${w.id}')">Löschen</button></div>`).join(''):'<p class="muted">Noch keine Gewichtseinträge.</p>';
 }
 async function saveWeight(){
