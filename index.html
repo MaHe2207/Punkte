@@ -67,7 +67,7 @@
     .toast.success{background:#166534}.toast.error{background:#991b1b}
     .toast-icon{font-size:22px;font-weight:900}.toast-text{font-size:14px;font-weight:700;line-height:1.35}
 
-/* Meine Punkte v1.1.0 — cohesive mobile-first redesign */
+/* Meine Punkte v1.2.0 — cohesive mobile-first redesign */
 :root{--bg:#f5f8fb;--card:#ffffff;--text:#12213a;--muted:#68778c;--line:#e4eaf2;--accent:#0757c8;--good:#099c72;--bad:#c13f4c;--soft:#e9f4ff}
 body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:92px}
 header{background:rgba(250,252,255,.96);border-bottom:1px solid #e6edf5;padding-top:calc(13px + env(safe-area-inset-top))}
@@ -107,7 +107,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
 .weight-chart{margin-top:14px}.weight-chart svg{width:100%;height:auto;display:block;background:linear-gradient(#f9fcff,#f0f7ff);border-radius:14px}
 
 
-/* v1.1.0 – screen-first information architecture */
+/* v1.2.0 – screen-first information architecture */
 :root{--bg:#f5f8f7;--card:#fff;--text:#1e3442;--muted:#738493;--line:#e6eeed;--accent:#247e85;--good:#268b70;--soft:#e6f4ef}
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 header{background:rgba(245,248,247,.97);border-bottom:0;padding-bottom:7px}
@@ -130,7 +130,30 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
 .weekbar>div{background:#3fa78c}.create-action{background:#287f86}
 @media(max-width:390px){main{padding:10px 11px 20px}.card{padding:15px}.today-circle{width:174px;height:174px}.today-circle>div{width:151px;height:151px}.today-circle strong{font-size:48px}.today-hero .metric b{font-size:21px}nav button{font-size:9px}}
 
-  </style>
+  
+/* v1.2.0: Wochenübersicht und Gerichte als eigenständige Screens */
+.week-chart-heading{font-weight:750;margin:18px 0 9px;color:var(--text)}
+.week-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;padding:15px 8px 9px;background:#f6faf8;border-radius:18px;min-height:180px}
+.week-bar-cell{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+.week-bar-value{font-size:12px;font-weight:750;font-variant-numeric:tabular-nums}
+.week-bar-track{height:106px;width:min(100%,29px);border-radius:12px;background:#e4eee9;display:flex;align-items:end;overflow:hidden}
+.week-bar-fill{width:100%;background:linear-gradient(0deg,#318b78,#87d5a9);border-radius:10px 10px 0 0;min-height:3px}
+.week-bar-fill.over{background:linear-gradient(0deg,#c16a43,#efb28b)}
+.week-bar-day{font-size:12px;color:var(--muted);font-weight:650}
+.compact-help{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.compact-help summary{cursor:pointer;font-weight:650;color:var(--text)}
+.compact-help p{margin:10px 0 0}
+.recipe-search-top input{width:100%;box-sizing:border-box;margin-top:12px}
+.recipe-filters .toolbar{margin-top:12px}
+.recipe-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.recipe-gallery .recipe-tile{padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff;min-width:0}
+.recipe-gallery .recipe-tile>.row{display:flex;flex-direction:column;align-items:stretch;gap:9px}
+.recipe-gallery .food-thumb{width:100%;height:120px;object-fit:cover;border-radius:12px}
+.recipe-gallery .recipe-tile .grow{width:100%;min-width:0}
+.recipe-gallery .recipe-tile .actions{justify-content:flex-start;gap:5px}
+.recipe-gallery .recipe-tile .actions button{font-size:11px;padding:7px 8px}
+@media(max-width:360px){.recipe-gallery{grid-template-columns:1fr}.week-chart{gap:4px}}
+</style>
 </head>
 <body>
 <header><h1 id="pageTitle">Heute</h1></header>
@@ -303,7 +326,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
         <div class="metric"><span class="muted">Tages-Restpunkte umgewandelt</span><b id="carryIn">0</b></div>
         <div class="metric"><span class="muted">Heute bisher ungenutzt (max. 4)</span><b id="carryOut">0</b></div>
       </div>
-      <p class="muted" style="margin-bottom:0">Am Tageswechsel wandern bis zu 4 ungenutzte Tagespunkte ins Wochenbudget. Montags startet das Wochenbudget neu.</p>
+      <details class="compact-help"><summary>Wie funktioniert der Übertrag?</summary><p class="muted">Am Tageswechsel wandern bis zu 4 ungenutzte Tagespunkte ins Wochenbudget. Montags startet das Wochenbudget neu.</p></details>
     </div>
     <div class="card">
       <div class="week-head">
@@ -312,7 +335,8 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
         <button class="secondary" onclick="changeWeek(1)">Nächste →</button>
       </div>
       <button class="secondary full" style="margin-top:8px" onclick="goCurrentWeek()">Zur aktuellen Woche</button>
-      <div id="weekDays"></div>
+      <div class="week-chart-heading">Punkte pro Tag</div><div id="weekChart" class="week-chart" aria-label="Punkteverbrauch der Woche"></div>
+      <div class="week-chart-heading">Tagesdetails</div><div id="weekDays"></div>
     </div>
   </section>
 
@@ -339,8 +363,8 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
     </details><div class="card">
       <div class="title">Gespeicherte Gerichte</div>
       
-      <div class="toolbar">
-        <input id="recipeSearch" class="wide" placeholder="Gericht suchen …" oninput="renderRecipeLibrary()">
+      <div class="recipe-search-top"><input id="recipeSearch" placeholder="Gericht suchen …" aria-label="Gericht suchen" oninput="renderRecipeLibrary()"></div>
+      <details class="compact-help recipe-filters"><summary>Filter und Eintragsdatum</summary><div class="toolbar">
         <select id="recipePointsFilter" onchange="renderRecipeLibrary()">
           <option value="all">Alle Punkte</option>
           <option value="low">0–5 P / Portion</option>
@@ -356,7 +380,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
         </select>
         <div class="wide"><label>Datum für „Eintragen“</label><input id="recipeListDate" type="date"></div>
       </div>
-      <div id="recipeLibrary" style="margin-top:10px"></div>
+      </details><div id="recipeLibrary" class="recipe-gallery" style="margin-top:10px"></div>
     </div>
   </section>
 
@@ -378,7 +402,7 @@ nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{backgr
     <div class="card"><div class="title">Gewichtsverlauf</div><div id="weightChart" class="weight-chart"></div><details><summary>Alle Einträge</summary><div id="weightList"></div></details></div>
   </section>
 
-  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.1.0</strong></div></div>
+  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.2.0</strong></div></div>
     <div class="card">
       <div class="title">Punktebudgets</div>
       <label>Tagespunkte (jeden Tag neu)</label><input id="dailyTargetInput" type="number" min="0" step="1">
@@ -581,6 +605,12 @@ function renderWeek(){
     const status=ds>today?'Noch nicht begonnen':`Tagesrest ${day.dailyLeft} P · ${ds<today?'Übertrag':'möglicher Übertrag'} ${day.rollover} P · Wochenverbrauch ${day.weekCost} P`;
     rows.push(`<details class="daybox"><summary class="dayhead"><div class="row"><div class="grow"><b>${['Mo','Di','Mi','Do','Fr','Sa','So'][i]} · ${d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})}</b><div class="muted">${status}</div></div><div><b>${p}</b> P</div></div></summary><div class="daydetails">${details}</div></details>`);
   }
+  const maxDaily=Math.max(1,state.dailyTarget,...Array.from({length:7},(_,i)=>Math.max(0,pointsForDate(localDate(addDays(mon,i))))));
+  const chart=document.getElementById('weekChart');
+  if(chart)chart.innerHTML=Array.from({length:7},(_,i)=>{
+    const d=addDays(mon,i),used=Math.max(0,pointsForDate(localDate(d))),height=Math.max(4,Math.round(100*used/maxDaily));
+    return `<div class="week-bar-cell"><span class="week-bar-value">${used}</span><div class="week-bar-track"><div class="week-bar-fill${used>state.dailyTarget?' over':''}" style="height:${height}%"></div></div><span class="week-bar-day">${['Mo','Di','Mi','Do','Fr','Sa','So'][i]}</span></div>`;
+  }).join('');
   weekTarget.textContent=wk.start;weekActual.textContent=wk.spent;weekRemaining.textContent=wk.remaining;carryIn.textContent=wk.bonus;
   const todayInWeek=localDate(mondayOf())===localDate(mon);
   carryOut.textContent=todayInWeek?dayBudget(today).rollover:'–';weekDays.innerHTML=rows.join('');
@@ -649,7 +679,7 @@ function renderRecipeLibrary(){
   const q=(recipeSearch?.value||'').trim().toLowerCase(),filter=recipePointsFilter?.value||'all',sort=recipeSort?.value||'name_asc';
   let items=state.recipes.filter(r=>{const p=n(r.pointsPerServing);const f=filter==='all'||(filter==='low'&&p<=5)||(filter==='mid'&&p>=6&&p<=10)||(filter==='high'&&p>10);return (!q||r.name.toLowerCase().includes(q))&&f});
   items.sort((a,b)=>sort==='name_desc'?b.name.localeCompare(a.name,'de'):sort==='points_asc'?a.pointsPerServing-b.pointsPerServing:sort==='points_desc'?b.pointsPerServing-a.pointsPerServing:sort==='servings_desc'?b.servings-a.servings:a.name.localeCompare(b.name,'de'));
-  recipeLibrary.innerHTML=items.length?items.map(r=>`<div class="item"><div class="row">${r.image?`<img class="food-thumb" src="${esc(r.image)}" alt="" loading="lazy">`:'<div class="food-thumb empty-thumb">🍲</div>'}<div class="grow"><div class="item-name">${esc(r.name)}</div><div class="muted">${r.pointsPerServing} P / Portion · ${r.servings} Portion(en) · ${r.ingredients.length} Zutat(en)</div></div><div class="actions"><button class="smallbtn" onclick="addSavedRecipeToDate('${r.id}',recipeListDate.value||localDate())">Eintragen</button><button class="secondary smallbtn" onclick="editRecipe('${r.id}')">Bearbeiten</button><button class="danger smallbtn" onclick="deleteRecipe('${r.id}')">Löschen</button></div></div></div>`).join(''):'<p class="muted">Keine Gerichte entsprechen der Auswahl.</p>';
+  recipeLibrary.innerHTML=items.length?items.map(r=>`<div class="item recipe-tile"><div class="row">${r.image?`<img class="food-thumb" src="${esc(r.image)}" alt="" loading="lazy">`:'<div class="food-thumb empty-thumb">🍲</div>'}<div class="grow"><div class="item-name">${esc(r.name)}</div><div class="muted">${r.pointsPerServing} P / Portion · ${r.servings} Portion(en) · ${r.ingredients.length} Zutat(en)</div></div><div class="actions"><button class="smallbtn" onclick="addSavedRecipeToDate('${r.id}',recipeListDate.value||localDate())">Eintragen</button><button class="secondary smallbtn" onclick="editRecipe('${r.id}')">Bearbeiten</button><button class="danger smallbtn" onclick="deleteRecipe('${r.id}')">Löschen</button></div></div></div>`).join(''):'<p class="muted">Keine Gerichte entsprechen der Auswahl.</p>';
 }
 function addIngredient(){const p=state.products.find(x=>x.id===ingredientSelect.value);if(!p)return;recipeDraft.push({id:crypto.randomUUID(),productId:p.id,name:p.name,grams:Math.max(1,n(ingredientGrams.value))});renderRecipeBuilder()}
 function renderRecipeBuilder(){let total=0;recipeIngredients.innerHTML=recipeDraft.length?recipeDraft.map(i=>{const p=state.products.find(x=>x.id===i.productId),c=p?pointsForProduct(p,i.grams):{ok:false},pts=c.ok?c.points:0;total+=pts;return `<div class="item row"><div class="grow"><b>${esc(i.name)}</b><div class="muted">${i.grams} g · ${pts} P</div></div><button class="danger smallbtn" onclick="removeIngredient('${i.id}')">×</button></div>`}).join(''):'<p class="muted">Noch keine Zutaten.</p>';const servings=Math.max(1,Math.round(n(recipeServings.value)||1));recipePoints.textContent=total;recipePerServing.textContent=`${Math.round(total/servings)} Punkte pro Portion`}
