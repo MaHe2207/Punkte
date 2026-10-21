@@ -1,4 +1,4 @@
-const CACHE = 'meine-punkte-v1.0.0-redesign';
+const CACHE = 'meine-punkte-v1.1.0-structure';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));

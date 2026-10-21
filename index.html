@@ -4,7 +4,7 @@
 <link rel="icon" type="image/png" href="./icon-192.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#eef6f6" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Meine Punkte</title>
@@ -67,7 +67,7 @@
     .toast.success{background:#166534}.toast.error{background:#991b1b}
     .toast-icon{font-size:22px;font-weight:900}.toast-text{font-size:14px;font-weight:700;line-height:1.35}
 
-/* Meine Punkte v1.0.0 — cohesive mobile-first redesign */
+/* Meine Punkte v1.1.0 — cohesive mobile-first redesign */
 :root{--bg:#f5f8fb;--card:#ffffff;--text:#12213a;--muted:#68778c;--line:#e4eaf2;--accent:#0757c8;--good:#099c72;--bad:#c13f4c;--soft:#e9f4ff}
 body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:92px}
 header{background:rgba(250,252,255,.96);border-bottom:1px solid #e6edf5;padding-top:calc(13px + env(safe-area-inset-top))}
@@ -106,6 +106,30 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
 .action-disclosure{margin-bottom:14px}.action-disclosure>summary{background:#e8f7f1;color:#08775d;border-radius:14px;padding:14px 17px;font-weight:750}.action-disclosure>.card{margin-top:8px}
 .weight-chart{margin-top:14px}.weight-chart svg{width:100%;height:auto;display:block;background:linear-gradient(#f9fcff,#f0f7ff);border-radius:14px}
 
+
+/* v1.1.0 – screen-first information architecture */
+:root{--bg:#f5f8f7;--card:#fff;--text:#1e3442;--muted:#738493;--line:#e6eeed;--accent:#247e85;--good:#268b70;--soft:#e6f4ef}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:rgba(245,248,247,.97);border-bottom:0;padding-bottom:7px}
+header h1{font-size:18px;font-weight:800;color:#264d55}
+main{max-width:640px;padding:12px 14px 26px}
+.section-intro{margin:5px 3px 18px}.section-intro span{font-size:10px;color:#46978b;letter-spacing:1.7px}.section-intro h2{font-size:29px;letter-spacing:-1.1px;font-weight:800}
+.card{border:1px solid #eaf0ed;border-radius:23px;box-shadow:0 5px 22px rgba(26,69,68,.035);padding:19px;margin-bottom:15px}
+.hero{background:linear-gradient(145deg,#e6f6ee,#f0f9f7 65%,#e9f5fa);border:1px solid #dcefe8}
+.today-hero{text-align:center;padding:24px 16px 19px}.today-circle{width:195px;height:195px;background:conic-gradient(#45a993 var(--progress,100%),#d9eae7 0);box-shadow:none;margin:0 auto 21px}.today-circle>div{width:170px;height:170px}.today-circle strong{color:#236b72;font-size:54px}
+.today-hero .grid3{gap:8px}.today-hero .metric{padding:13px 5px;border:1px solid #d9eae4;border-radius:17px}.today-hero .metric b{font-size:24px;color:#247e85}.today-hero .metric .muted{font-size:11px}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.quick-actions button{min-height:55px;background:#287f86;border-radius:18px;font-size:14px}.quick-actions button:nth-child(2){background:#e4f1eb;color:#24766d}
+button{background:#287f86;border-radius:14px}button.secondary{background:#e9f2f1;color:#37666a}button.good{background:#dff3e9;color:#24725e}
+input,select,textarea{border-color:#dfe9e7;border-radius:13px}input:focus,select:focus,textarea:focus{border-color:#5daea3;box-shadow:0 0 0 3px #def1ec}
+.metric{background:#f3f8f6}.points{color:#287f86}.notice{background:#fff5e7;color:#86612f}
+.feature-panel{margin:0 0 14px;border:1px solid #e3eeea;border-radius:18px;background:#fff;overflow:hidden}.feature-panel>summary{list-style:none;cursor:pointer;padding:17px 19px;font-size:15px;font-weight:750;color:#286e71;display:flex;align-items:center;justify-content:space-between}.feature-panel>summary::-webkit-details-marker{display:none}.feature-panel>summary:after{content:'＋';font-size:20px;color:#49958b}.feature-panel[open]>summary:after{content:'−'}.feature-panel>.card{margin:0;border:0;border-top:1px solid #edf3f1;border-radius:0;box-shadow:none}
+.filter-details>summary{color:#467b7a}.editor-disclosure>summary{display:none}.editor-disclosure[open]>.card{margin:0}
+nav{background:#fff;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid #e4eeeb;box-shadow:0 -5px 22px #29594c09}
+nav button{font-size:10px;color:#788a8b;line-height:1.3}nav button.active{background:#e6f5ee;color:#237d72}nav .ico{font-size:22px}
+.version-card{background:linear-gradient(125deg,#e6f4ed,#eef8f7)}.version-card strong{color:#277d77}
+.weekbar>div{background:#3fa78c}.create-action{background:#287f86}
+@media(max-width:390px){main{padding:10px 11px 20px}.card{padding:15px}.today-circle{width:174px;height:174px}.today-circle>div{width:151px;height:151px}.today-circle strong{font-size:48px}.today-hero .metric b{font-size:21px}nav button{font-size:9px}}
+
   </style>
 </head>
 <body>
@@ -142,7 +166,8 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
         <div class="metric"><span class="muted">Wochenpunkte übrig</span><b id="todayRemaining">35</b></div>
       </div>
     </div>
-    <div class="card">
+    <div class="quick-actions"><button onclick="document.querySelector('[data-view=productsView]').click()">＋ Lebensmittel</button><button onclick="document.querySelector('[data-view=recipesView]').click()">＋ Gericht</button></div>
+    <div class="card diary-card">
       <div class="row"><div class="grow"><div class="title">Heute eingetragen</div><div class="muted">Lebensmittel und Sport</div></div></div>
       <div id="todayList"></div>
     </div>
@@ -209,7 +234,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <button class="full" style="margin-top:12px" onclick="saveProductEdit()">Änderungen speichern</button>
     </div>
 
-    <div class="card">
+    <details class="feature-panel"><summary>▦ Barcode scannen</summary><div class="card">
       <div class="title">Barcode scannen</div>
       <p class="muted">Kamera-Scan benötigt HTTPS und Browser-Unterstützung. Alternativ Barcode eintippen.</p>
       <div class="scanbox"><video id="video" playsinline muted></video><div class="scanline"></div></div>
@@ -221,6 +246,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <div class="row"><input class="grow" id="barcodeInput" inputmode="numeric" placeholder="z. B. 3017624010701"><button onclick="lookupBarcode()">Suchen</button></div>
       <div id="scanStatus" class="muted" style="margin-top:8px"></div>
     </div>
+    </details>
     <div id="productCard" class="card" style="display:none">
       <div class="row"><div class="grow"><div class="title" id="pName"></div><div class="muted" id="pBrand"></div></div><div class="points" id="pPoints"></div></div>
       <div id="pImageWrap" style="margin-top:10px"></div><div class="image-actions"><button class="secondary smallbtn" onclick="findSharedImage('product')">Bild aus dem Internet</button><button class="secondary smallbtn" onclick="document.getElementById('productImageFile').click()">Eigenes Bild</button><input id="productImageFile" type="file" accept="image/*" hidden onchange="uploadSharedImage(event,'product')"></div><div class="muted" id="productImageStatus"></div>
@@ -241,7 +267,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
         <button class="secondary" onclick="saveCurrentProduct()">Speichern</button>
       </div>
     </div>
-    <div class="card">
+    <details class="feature-panel" id="manualProductPanel"><summary>＋ Eigenes Lebensmittel anlegen</summary><div class="card">
       <div class="title">Lebensmittel manuell</div>
       <label>Bestätigtes WW-0-Punkte-Lebensmittel auswählen (optional)</label>
 <input id="mZeroSearch" type="search" placeholder="0-Punkte-Lebensmittel suchen …" oninput="filterZeroReferences()" autocomplete="off" aria-label="0-Punkte-Lebensmittel suchen">
@@ -260,6 +286,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <div class="muted" style="margin-top:8px">Angaben jeweils pro 100 g.</div>
       <button class="full" style="margin-top:12px" onclick="createManualProduct()">Berechnen & anzeigen</button>
     </div>
+    </details>
   </section>
 
   <section id="weekView" class="view"><div class="section-intro"><span>DEINE WOCHE</span><h2>Dein Fortschritt</h2></div>
@@ -339,7 +366,7 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <div class="weight-big" id="latestWeight">–</div>
       <div class="muted" id="latestWeightDate">Noch kein Gewicht eingetragen</div>
     </div>
-    <div class="card">
+    <details class="feature-panel"><summary>＋ Gewicht eintragen</summary><div class="card">
       <div class="title">Gewicht eintragen</div>
       <div class="grid2">
         <div><label>Datum</label><input id="weightDate" type="date"></div>
@@ -347,10 +374,11 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       </div>
       <button class="full" style="margin-top:12px" onclick="saveWeight()">Gewicht speichern</button>
     </div>
+    </details>
     <div class="card"><div class="title">Gewichtsverlauf</div><div id="weightChart" class="weight-chart"></div><details><summary>Alle Einträge</summary><div id="weightList"></div></details></div>
   </section>
 
-  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.0.0</strong></div></div>
+  <section id="settingsView" class="view"><div class="card version-card"><div class="row"><div class="grow"><div class="title">Meine Punkte</div><div class="muted">App-Version</div></div><strong>v1.1.0</strong></div></div>
     <div class="card">
       <div class="title">Punktebudgets</div>
       <label>Tagespunkte (jeden Tag neu)</label><input id="dailyTargetInput" type="number" min="0" step="1">
@@ -358,9 +386,10 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <details><summary>Wie funktionieren die Budgets?</summary><p class="muted">Maximal 4 ungenutzte Tagespunkte fließen in die Wochenpunkte. Kein Übertrag in die nächste Woche.</p></details>
       <button class="full" style="margin-top:12px" onclick="saveSettings()">Speichern</button>
     </div>
-    <div class="card">
+    <details class="feature-panel"><summary>App installieren</summary><div class="card">
       <div class="title">App installieren</div><p class="muted" id="installHint">Installiere Meine Punkte auf deinem Android-Startbildschirm.</p><button id="installButton" class="full" onclick="installApp()">App installieren</button>
     </div>
+    </details>
     <div class="card"><div class="title">Konto & Haushalt</div>
       <div class="muted" id="accountInfo">–</div>
       <div class="muted" id="householdInfo" style="margin-top:4px">–</div>
@@ -368,11 +397,12 @@ nav button.active{background:#e7f2ff;color:#0757c8}nav .ico{font-size:21px;margi
       <div id="inviteCodeBox" class="notice ok" style="display:none;margin-top:10px"></div>
       <button class="danger full" style="margin-top:10px" onclick="logout()">Abmelden</button>
     </div>
-    <div class="card">
+    <details class="feature-panel"><summary>Formel & Wartung</summary><div class="card">
       <div class="title">Formel</div>
       <details><summary>Details zur Punkteberechnung</summary><p class="muted">RL4.2 ist eine Näherung. 0-Punkte-Lebensmittel und manuelle Werte haben Vorrang.</p></details>
       <button class="danger full" onclick="resetData()">Lokalen Cache löschen</button>
     </div>
+    </details>
   </section>
 </main>
 
